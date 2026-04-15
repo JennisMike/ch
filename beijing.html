@@ -1,0 +1,1230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-translate="page.title">Beijing - Forbidden City | Chinese Heritage</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Poppins:wght@300;400;600&family=Noto+Sans+SC:wght@400;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="translations.css" />
+    <link rel="stylesheet" href="ai-chat.css" />
+    <style>
+        .beijing-hero {
+            background: linear-gradient(135deg, rgba(139, 0, 0, 0.9), rgba(26, 0, 0, 0.9)), url('https://images.unsplash.com/photo-1547981609-4b6bf67b3a2a?w=1600&h=800&fit=crop') center/cover;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .beijing-image {
+            position: relative;
+            animation: fadeInRight 1s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+        }
+
+        .beijing-image video {
+            width: 100vw;
+            height: 100vh;
+            object-fit: cover;
+            border-radius: 0;
+            box-shadow: none;
+            border: none;
+        }
+
+        .beijing-features {
+            padding: 30px 0;
+            background: linear-gradient(135deg, #fff9f0 0%, #fdf0e0 100%);
+        }
+
+        .beijing-features-container {
+            width: 100%;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .beijing-features-title {
+            text-align: center;
+            font-family: "Cinzel", serif;
+            font-size: 3rem;
+            background: linear-gradient(135deg, #D4AF37, #FFD700);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 60px;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: #5a3a2a;
+            font-size: 1.2rem;
+            margin-bottom: 60px;
+            font-family: "Playfair Display", serif;
+        }
+
+        .beijing-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 32px;
+        }
+
+        .beijing-option {
+            background: white;
+            border-radius: 24px;
+            padding: 48px 32px;
+            text-align: center;
+            position: relative;
+            transition: all 0.3s ease;
+            box-shadow: 0 15px 35px rgba(187,30,30,0.08);
+            border: 1px solid rgba(212,175,55,0.15);
+        }
+
+        .beijing-option:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 50px rgba(187,30,30,0.25);
+            border-color: rgba(212,175,55,0.4);
+        }
+
+        .beijing-option-icon {
+            font-size: 4rem;
+            color: #D4AF37;
+            margin-bottom: 20px;
+        }
+
+        .beijing-option h3 {
+            font-family: "Cinzel", serif;
+            font-size: 1.8rem;
+            color: #1a0000;
+            margin-bottom: 20px;
+        }
+
+        .beijing-option p {
+            color: #5a3a2a;
+            line-height: 1.7;
+            margin-bottom: 30px;
+            font-family: "Playfair Display", serif;
+        }
+
+        .beijing-option .btn {
+            background: linear-gradient(135deg, #BB1E1E, #8B0000);
+            color: #FFD700;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 50px;
+            text-decoration: none;
+            display: inline-block;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-family: "Poppins", sans-serif;
+        }
+
+        .beijing-option .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(187,30,30,0.5);
+            background: linear-gradient(135deg, #d42020, #a00000);
+        }
+
+        .button-group {
+            display: flex;
+            gap: 15px;
+            justify-content: flex-start;
+            flex-wrap: wrap;
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+            color: #FFD700;
+            padding: 12px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            font-family: "Poppins", sans-serif;
+            transition: all 0.3s ease;
+            display: inline-block;
+            text-align: center;
+            border: 2px solid rgba(212, 175, 55, 0.3);
+        }
+
+        .btn-secondary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(44, 62, 80, 0.5);
+            background: linear-gradient(135deg, #34495e, #2c3e50);
+            border-color: rgba(212, 175, 55, 0.5);
+        }
+
+        /* Interactive Widget Styles */
+        .widget {
+            max-width: 760px;
+            margin: 0 auto;
+        }
+
+        .widget .subtitle {
+            text-align: center;
+            font-size: 14px;
+            color: rgba(255, 215, 0, 0.8);
+            margin-bottom: 24px;
+        }
+
+        .stage-btns {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .stage-btn {
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+            transition: all .2s;
+            background: rgba(139, 0, 0, 0.3);
+            color: #FFD700;
+            font-family: "Poppins", sans-serif;
+        }
+
+        .stage-btn.active {
+            background: #BA7517;
+            color: #fff;
+            border-color: #BA7517;
+        }
+
+        .stage-btn:hover:not(.active) {
+            background: rgba(139, 0, 0, 0.5);
+            border-color: rgba(212, 175, 55, 0.5);
+        }
+
+        .widget svg {
+            width: 100%;
+            display: block;
+            margin-bottom: 16px;
+        }
+
+        .detail-card {
+            border-radius: 12px;
+            padding: 16px 20px;
+            background: rgba(139, 0, 0, 0.2);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+        }
+
+        .stage-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: #FFD700;
+            margin-bottom: 12px;
+            font-family: "Cinzel", serif;
+        }
+
+        .stage-title .zh {
+            font-size: 12px;
+            color: rgba(255, 215, 0, 0.7);
+            font-weight: 400;
+            margin-left: 6px;
+        }
+
+        .layer-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+        }
+
+        .layer-row:last-child {
+            border-bottom: none;
+        }
+
+        .layer-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            flex-shrink: 0;
+            margin-top: 3px;
+        }
+
+        .layer-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: #FFD700;
+            min-width: 160px;
+            flex-shrink: 0;
+        }
+
+        .layer-name .zh {
+            font-size: 12px;
+            color: rgba(255, 215, 0, 0.7);
+            font-weight: 400;
+            margin-left: 4px;
+        }
+
+        .layer-desc {
+            font-size: 13px;
+            color: rgba(255, 215, 0, 0.8);
+            line-height: 1.5;
+        }
+
+        @media (max-width: 500px) {
+            .layer-row { flex-direction: column; gap: 4px; }
+            .layer-name { min-width: unset; }
+        }
+
+        /* Bracket Widget Specific Styles */
+        .diagram-wrap {
+            background: rgba(139, 0, 0, 0.2);
+            border-radius: 12px;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            padding: 16px;
+            margin-bottom: 16px;
+        }
+
+        .diagram-wrap svg {
+            background: rgba(255, 215, 0, 0.05);
+            border-radius: 8px;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 10000;
+            overflow-y: auto;
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, rgba(139, 0, 0, 0.95), rgba(26, 0, 0, 0.95));
+            border: 2px solid rgba(212, 175, 55, 0.3);
+            border-radius: 20px;
+            margin: 50px auto;
+            max-width: 970px;
+            padding: 40px;
+            position: relative;
+            color: #FFD700;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 2rem;
+            color: #FFD700;
+            cursor: pointer;
+            background: none;
+            border: none;
+            transition: all 0.3s ease;
+        }
+
+        .modal-close:hover {
+            color: #FF6B6B;
+            transform: scale(1.2);
+        }
+
+        .modal h2 {
+            font-family: "Cinzel", serif;
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .modal-content p {
+            line-height: 1.8;
+            margin-bottom: 20px;
+            color: rgba(255, 215, 0, 0.9);
+        }
+
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 30px 0;
+        }
+
+        .video-item {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            overflow: hidden;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+        }
+
+        .video-item video {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .video-item h4 {
+            padding: 15px;
+            color: #FFD700;
+            font-family: "Cinzel", serif;
+        }
+
+        .statues-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .statue-item {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            perspective: 1000px;
+            height: 400px;
+            position: relative;
+        }
+
+        .statue-card {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.6s;
+        }
+
+        .statue-card.flipped {
+            transform: rotateY(180deg);
+        }
+
+        .statue-card-front, .statue-card-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .statue-card-back {
+            transform: rotateY(180deg);
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .statue-card-back p {
+            color: rgba(255, 215, 0, 0.9);
+            line-height: 1.6;
+            font-size: 0.9rem;
+        }
+
+        .statue-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(212, 175, 55, 0.2);
+        }
+
+        .statue-item img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        .statue-item h4 {
+            color: #FFD700;
+            font-family: "Cinzel", serif;
+            margin-bottom: 10px;
+        }
+
+        .statue-item p {
+            color: rgba(255, 215, 0, 0.8);
+            font-size: 0.9rem;
+        }
+
+        @keyframes fadeInRight {
+            from { opacity: 0; transform: translateX(50px); }
+            to   { opacity: 1; transform: translateX(0); }
+        }
+
+        .circular-carousel {
+            padding: 5px 0;
+            background: linear-gradient(135deg, rgba(139, 0, 0, 0.05), rgba(26, 0, 0, 0.1));
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+        }
+
+        .carousel-container {
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        .horizontal-wrapper {
+            position: relative;
+            width: 100%;
+            height: 300px;
+            overflow: hidden;
+            background: rgba(0, 0, 0, 0.1);
+        }
+
+        .carousel-track {
+            position: absolute;
+            display: flex;
+            gap: 30px;
+            animation: scrollCarousel 25s linear infinite;
+            width: fit-content;
+        }
+
+        .carousel-item {
+            flex-shrink: 0;
+            width: 280px;
+            height: 300px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+            border: 3px solid #D4AF37;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .carousel-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 12px 35px rgba(212, 175, 55, 0.4);
+            z-index: 10;
+        }
+
+        .carousel-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .carousel-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(139, 0, 0, 0.9), transparent);
+            color: #FFD700;
+            padding: 15px 10px 10px;
+            font-size: 0.9rem;
+            font-family: "Poppins", sans-serif;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        @keyframes scrollCarousel {
+            from { transform: translateX(0); }
+            to   { transform: translateX(-50%); }
+        }
+
+        .carousel-track:hover {
+            animation-play-state: paused;
+        }
+
+        @media (max-width: 768px) {
+            .beijing-image video { height: 60vh; }
+            .beijing-options { grid-template-columns: 1fr; }
+            .horizontal-wrapper { height: 250px; }
+            .carousel-item { width: 220px; height: 160px; }
+        }
+
+        .book-layout {
+            background: linear-gradient(135deg, #fef5e4, #fff3e2);
+            border: 2px solid #d4af37;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 20px 0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .book-page {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 40px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+        }
+
+        .book-page:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .book-left {
+            flex: 0 0 45%;
+            position: relative;
+        }
+
+        .book-right {
+            flex: 0 0 55%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .book-right h3 {
+            font-family: "Cinzel", serif;
+            font-size: 1.8rem;
+            color: #8b4513;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .book-right p {
+            color: #5a3a2a;
+            line-height: 1.8;
+            margin-bottom: 15px;
+            font-family: "Playfair Display", serif;
+            font-size: 1rem;
+        }
+
+        .book-right p:first-child::first-letter {
+            font-size: 3rem;
+            float: left;
+            font-weight: 800;
+            line-height: 0.8;
+            margin-right: 0.5rem;
+            margin-top: 0.1rem;
+            color: #8b4513;
+        }
+
+        .book-left img {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .book-left img:hover {
+            transform: scale(1.4);
+            box-shadow: 0 15px 35px rgba(139, 0, 0, 0.3);
+            z-index: 10;
+        }
+
+        @media (max-width: 768px) {
+            .book-page { flex-direction: column; gap: 20px; }
+            .book-left, .book-right { flex: 1; width: 100%; }
+            .book-right h3 { font-size: 1.5rem; }
+        }
+    </style>
+    <!-- AI Chat Styles -->
+    <link rel="stylesheet" href="ai-chat.css">
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="undex.html" class="nav-logo">
+                <span class="logo-icon">🏯</span>
+                <span>Chinese-Heritage</span>
+            </a>
+            <div class="nav-menu" id="navMenu">
+                <a href="undex.html" class="nav-link" data-translate="nav.home">Home</a>
+                <a href="#about" class="nav-link" data-translate="nav.about">About</a>
+                <a href="#explore" class="nav-link" data-translate="nav.explore">Explore</a>
+                <a href="#marvels" class="nav-link" data-translate="nav.marvels">Marvels</a>
+                <a href="#treasures" class="nav-link" data-translate="nav.treasures">Treasures</a>
+                <div class="language-selector">
+                    <button class="language-btn">
+                        <i class="fas fa-globe"></i>
+                        <span data-translate="lang.current">English</span>
+                        <i class="fas fa-chevron-down fa-xs"></i>
+                    </button>
+                    <div class="language-dropdown">
+                        <a href="#" class="language-option" data-lang="en">
+                            <span class="flag">🇺🇸</span>
+                            <span data-translate="lang.en">English</span>
+                        </a>
+                        <a href="#" class="language-option" data-lang="zh">
+                            <span class="flag">🇨🇳</span>
+                            <span data-translate="lang.zh">中文 (Chinese)</span>
+                        </a>
+                        <a href="#" class="language-option" data-lang="ar">
+                            <span class="flag">🇸🇦</span>
+                            <span data-translate="lang.ar">العربية (Arabic)</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="nav-actions">
+                <div class="hamburger" id="hamburger">
+                    <span></span><span></span><span></span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Beijing Hero Section with Video -->
+    <section class="beijing-hero">
+        <div class="beijing-image">
+            <video autoplay muted loop playsinline>
+                <source src="videos/beijing-firstSection.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+    </section>
+
+    <!-- Horizontal Image Carousel Section -->
+    <section class="circular-carousel">
+        <div class="carousel-container">
+            <div class="horizontal-wrapper">
+                <div class="carousel-track">
+                    <div class="carousel-item">
+                        <img src="images/bei1.jpg" alt="bei1">
+                        <div class="carousel-caption"></div>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="images/bei2.jpeg" alt="bei2">
+                        <div class="carousel-caption"></div>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="images/bei3.jpeg" alt="bei3">
+                        <div class="carousel-caption"></div>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="images/bei4.jpg" alt="bei4">
+                        <div class="carousel-caption"></div>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="images/bei5.jpg" alt="bei5">
+                        <div class="carousel-caption"></div>
+                    </div>
+                    <!-- Duplicate for continuous scrolling -->
+                    <div class="carousel-item">
+                        <img src="images/bei1.jpg" alt="bei1">
+                        <div class="carousel-caption"></div>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="images/bei2.jpeg" alt="bei2">
+                        <div class="carousel-caption"></div>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="images/bei3.jpeg" alt="bei3">
+                        <div class="carousel-caption"></div>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="images/bei4.jpg" alt="bei4">
+                        <div class="carousel-caption"></div>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="images/bei5.jpg" alt="bei5">
+                        <div class="carousel-caption"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Beijing Features Section -->
+    <section class="beijing-features" id="features">
+        <div class="beijing-features-container">
+            <h2 class="beijing-features-title" data-translate="about.title">Immerse Yourself</h2>
+            <p class="section-subtitle" data-translate="about.subtitle">China's architectural landscape is a tapestry of ancient wisdom and modern innovation</p>
+            <div class="beijing-options">
+
+                <!-- Architecture Option -->
+                <div class="beijing-option" onclick="openModal('architecture')">
+                    <img src="images/beijing-frtsection.jpeg" alt="Forbidden City Architecture" style="width: 100%; height: 200px; object-fit: cover; border-radius: 10px; margin-bottom: 20px;">
+                    <h3 data-translate="about.discover">Architecture of Forbidden City</h3>
+                    <p data-translate="about.discoverDesc">See the picture and read about the magnificent architecture of China's imperial palace, discover the majesty of ancient Chinese design and construction techniques.</p>
+                    <div class="button-group">
+                        <a href="#" class="btn" onclick="event.stopPropagation(); openModal('architecture')" data-translate="btn.readMore">Read More</a>
+                        <a href="VisualInteract1.html" class="btn btn-secondary" onclick="event.stopPropagation();" target="_blank" data-translate="btn.visualInteractive">Visual Interactive</a>
+                    </div>
+                </div>
+
+                <!-- Chinese Bracket System -->
+                <div class="beijing-option" onclick="openModal('cities')">
+                    <img src="images/bracketRof1.jpg" alt="Chinese bracket System" style="width: 100%; height: 200px; object-fit: cover; border-radius: 10px; margin-bottom: 20px;">
+                    <h3 data-translate="beijing.stage.bracketSystem">Chinese bracket System</h3>
+                    <p data-translate="beijing.bracket.desc">The Dǒugǒng (斗拱) — China's Most Ingenious Invention in Architecture. If there is one thing that makes Chinese imperial architecture unique in the entire world, it is the dǒugǒng. This interlocking bracket system</p>
+                    <div class="button-group">
+                        <a href="#" class="btn" onclick="event.stopPropagation(); openModal('cities')" data-translate="btn.readMore">Read More</a>
+                        <a href="visualinteract2.html" class="btn btn-secondary" onclick="event.stopPropagation();" target="_blank" data-translate="btn.visualInteractive">Visual Interactive</a>
+                    </div>
+                </div>
+
+                <!-- Roof Statues Option -->
+                <div class="beijing-option">
+                    <img src="images/roof1.jpeg" alt="Chinese Architectural Details" style="width: 100%; height: 200px; object-fit: cover; border-radius: 10px; margin-bottom: 20px;">
+                    <h3 data-translate="about.uncover">Discover Architectural Marvels</h3>
+                    <p data-translate="about.uncoverDesc">See the picture and explore the intricate details and symbolic elements that make Chinese architecture truly remarkable, from roof statues to decorative patterns.</p>
+                    <a href="statues.html" class="btn" onclick="event.stopPropagation();" target="_blank" data-translate="btn.exploreStatues">Explore Statues</a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════
+         ARCHITECTURE MODAL
+    ═══════════════════════════════════════════ -->
+    <div id="architectureModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('architecture')">&times;</button>
+            <h2 data-translate="beijing.architecture.title">Forbidden City Architecture</h2>
+
+            <div class="book-layout">
+                <!-- Page 1 -->
+                <div class="book-page">
+                    <div class="book-left">
+                        <img src="images/beijing-frtsection.jpeg" alt="Forbidden City" style="width: 100%; height: 400px; object-fit: cover; border-radius: 10px;">
+                    </div>
+                    <div class="book-right">
+                        <h3 data-translate="beijing.modal.chapter1">Chapter I: Forbidden City</h3>
+                        <p data-translate="beijing.modal.intro1">The Forbidden City stands as the world's largest palace complex, spanning 720,000 square meters in the heart of Beijing. For nearly 500 years, this imperial palace served as the ceremonial and political center of Chinese government.</p>
+                        <p data-translate="beijing.modal.intro2">Constructed between 1406 and 1420 under Emperor Yongle of the Ming Dynasty, the Forbidden City in Beijing is the world's largest surviving palace complex. Over one million workers and 100,000 skilled craftsmen built its 980 buildings in just 14 years.</p>
+                    </div>
+                </div>
+
+                <!-- Page 2 -->
+                <div class="book-page">
+                    <div class="book-left">
+                        <img src="images/readmoreB.png" alt="Hall of Supreme Harmony" style="width: 100%; height: 400px; object-fit: cover; border-radius: 10px;">
+                    </div>
+                    <div class="book-right">
+                        <h3 data-translate="beijing.modal.chapter2">Chapter II: How Was It Built?</h3>
+                        <p data-translate="beijing.modal.intro3">Construction followed six key stages:</p>
+                        <p data-translate="beijing.modal.intro4">1. The Foundation (台基 Táijī) — Every major hall sits on a raised white marble terrace, sometimes 8 metres high. Stone column bases were placed precisely on the platform to protect wooden columns from ground moisture.</p>
+                        <p data-translate="beijing.modal.intro5">2. The Timber Frame (木作 Mùzuò) — Massive nanmu and pine logs, floated down rivers from forests over 2,000 km away, were raised as columns up to 12 metres tall. The entire frame uses no nails — only interlocking joinery.</p>
+                        <p data-translate="beijing.modal.intro6">3. The Bracket System (斗拱 Dǒugǒng) — Clusters of wooden blocks and arms interlock at the column tops to spread the enormous weight of the roof outward. They also act as natural shock absorbers during earthquakes.</p>
+                    </div>
+                </div>
+
+                <!-- Page 3 -->
+                <div class="book-page">
+                    <div class="book-left">
+                        <img src="images/bei3.jpeg" alt="Roof Guardians" style="width: 100%; height: 400px; object-fit: cover; border-radius: 10px;">
+                    </div>
+                    <div class="book-right">
+                        <p data-translate="beijing.modal.intro7">4. The Roof (瓦作 Wǎzuò) — Over one million imperial-yellow glazed tiles cover the main halls. The four-sided sweeping "hip" roof is the highest architectural rank in imperial China. Ceramic guardian figures line every ridge.</p>
+                        <p data-translate="beijing.modal.intro8">5. Painted Decoration (彩画作 Cǎihuàzuò) — Mineral pigments in blue, green, and gold were applied to every exposed timber surface. Columns were lacquered vermilion red and key motifs finished in real gold leaf.</p>
+                        <p data-translate="beijing.modal.intro9">6. Bamboo Scaffolding — As shown in Image 1, workers used lashed bamboo poles for scaffolding — lighter and more flexible than wood, yet strong enough to support builders high above the ground.</p>
+                    </div>
+                </div>
+
+                <!-- Page 4 -->
+                <div class="book-page">
+                    <div class="book-left">
+                        <img src="images/bei1.jpg" alt="Roof Guardians" style="width: 100%; height: 400px; object-fit: cover; border-radius: 10px;">
+                        <img src="images/bei4.jpg" alt="Roof Guardians" style="width: 100%; height: 400px; object-fit: cover; border-radius: 10px; margin-top: 10px;">
+                    </div>
+                    <div class="book-right">
+                        <h3 data-translate="beijing.modal.chapter3">Chapter III: The Colors of the Forbidden City — What Do They Mean?</h3>
+                        <p data-translate="beijing.modal.intro10">Yellow — The Emperor's Color (黄色 Huángsè)
+                        The sweeping roof tiles are glazed in imperial yellow, the most sacred color in Chinese culture. Yellow represented the earth, the center of the universe, and the Son of Heaven himself. It was strictly forbidden for any ordinary citizen or official to use yellow on their home — doing so was punishable by death. Only the emperor's buildings could wear this color, which is why the Forbidden City's rooflines glow gold across the entire Beijing skyline.</p>
+                        <p data-translate="beijing.modal.intro11">Red — Prosperity, Good Fortune, and Protection (红色 Hóngsè)
+                        The towering columns and walls are painted deep vermilion red. In Chinese culture red symbolises happiness, good luck, and the warding off of evil spirits. Red was also practical — the lacquer used to achieve this color acted as a sealant, protecting the timber columns from moisture, rot, and insects for centuries. The combination of red walls and yellow roofs became the defining visual identity of imperial China.</p>
+                    </div>
+                </div>
+
+                <!-- Page 5 -->
+                <div class="book-page">
+                    <div class="book-left">
+                        <img src="images/readmoreB2.jpg" alt="Roof Guardians" style="width: 100%; height: 400px; object-fit: cover; border-radius: 10px;">
+                    </div>
+                    <div class="book-right">
+                        <p data-translate="beijing.modal.intro12">Green and Blue-Green — Heaven and Nature (绿色/青色 Lǜsè/Qīngsè)
+                        Look closely at the eaves and the painted bands beneath the roofline (彩画作 Cǎihuàzuò). These are decorated in deep blue-green tones made from malachite and azurite — minerals ground into pigment. Blue-green represented wood, growth, spring, and the heavens in the Chinese Five Elements system (五行 Wǔxíng). It balanced the warm red and yellow, connecting the earthly palace to the natural world above.</p>
+                        <p  data-translate="beijing.modal.intro13">Gold — Divine Authority (金色 Jīnsè)
+                        Real gold leaf was applied to dragon motifs, door knobs, and decorative details throughout the palace. Gold amplified the divine status of the emperor, who was believed to be the earthly representative of heaven. Dragons painted and carved in gold were not merely decorative — they were protective symbols, and the five-clawed dragon was reserved exclusively for the emperor's use.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════
+         BRACKET ROOF MODAL (Read More)
+    ═══════════════════════════════════════════ -->
+    <div id="citiesModal" class="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal('cities')">&times;</button>
+            <h2>Discover Majestic Architecture</h2>
+
+            <div class="book-layout">
+                <!-- Page 1 -->
+                <div class="book-page">
+                    <div class="book-left">
+                        <img src="images/bracketRof2.jpeg" alt="Chinese Cities" style="width: 100%; height: 400px; object-fit: cover; border-radius: 10px;">
+                    </div>
+                    <div class="book-right">
+                        <h3 data-translate="beijing.modal.chapter4">Chapter I: The Dǒugǒng (斗拱) — China's Most Ingenious Invention in Architecture</h3>
+                        <p  data-translate="beijing.modal.intro14">If there is one thing that makes Chinese imperial architecture unique in the entire world, it is the dǒugǒng. This interlocking bracket system, visible in the diagram above, is found on every major hall of the Forbidden City — and it was engineered without a single nail.</p>
+                        <p  data-translate="beijing.modal.intro15">What Is the Dǒugǒng? The word dǒugǒng is made of two parts: dǒu (斗) meaning "block" and gǒng (拱) meaning "bow-shaped arm." Together they describe a cluster of wooden blocks and curved arms that stack and interlock at the top of a column to support the enormous weight of the roof above. Each cluster can contain dozens of individual pieces, all fitting together through pure joinery — no glue, no nails, no metal fasteners of any kind.</p>
+                    </div>
+                </div>
+
+                <!-- Page 2 -->
+                <div class="book-page">
+                    <div class="book-left">
+                        <img src="images/bracketRof3.jpeg" alt="Temple Architecture" style="width: 100%; height: 400px; object-fit: cover; border-radius: 10px;">
+                        <img src="images/bracketRof4.jpeg" alt="Temple Architecture" style="width: 100%; height: 400px; object-fit: cover; border-radius: 10px; margin-top: 10px;">
+                    </div>
+                    <div class="book-right">
+                        <h3 data-translate="beijing.modal.chapter5">Chapter II: Technical diagram of the Dǒugǒng (斗拱)</h3>
+                        <p  data-translate="beijing.modal.intro16">飞椽 (Fēi chuán) — Flying Rafters: The angled timber pieces at the top left of the diagram. These are the outermost rafters that create the dramatic upward curve at the corners of the roof. They extend beyond the bracket cluster to push the roofline tip upward.</p>
+                        <p  data-translate="beijing.modal.intro17">直椽 (Zhí chuán) — Straight Rafters: Sitting beneath the flying rafters, these are the main structural rafters that run straight along the roof slope, carrying the weight of the tiles down to the bracket system below.</p>
+                        <p  data-translate="beijing.modal.intro18">挑檐枋 (Tiāo yán fāng) — Eave-Projecting Beam: A horizontal beam that projects outward from the building, extending the roof's overhang. This long overhang protected the red-painted timber walls and columns below from rain.</p>
+                        <p  data-translate="beijing.modal.intro19">外拽枋 (Wài zhuāi fāng) — Outer Tie Beam: The outer horizontal beam that connects bracket clusters along the length of the building, distributing the load evenly across all the columns.</p>
+                    </div>
+                </div>
+
+                <!-- Page 3 -->
+                <div class="book-page">
+                    <div class="book-left">
+                        <img src="images/bracketRof5.jpeg" alt="Modern Architecture" style="width: 100%; height: 400px; object-fit: cover; border-radius: 10px;">
+                        <img src="images/bracketRof6.jpeg" alt="Modern Architecture" style="width: 100%; height: 400px; object-fit: cover; border-radius: 10px; margin-top: 10px;">
+                    </div>
+                    <div class="book-right">
+                        <p  data-translate="beijing.modal.intro20">盖斗板 (Gài dǒu bǎn) — Cover Board: A flat board that sits on top of the bracket cluster, providing a stable surface for the beams above to rest on.</p>
+                        <p data-translate="beijing.modal.intro21">正心枋 (Zhèng xīn fāng) — Central Tie Beam: The central horizontal member running directly above the column line, forming the structural spine of the bracket layer.</p>
+                        <p data-translate="beijing.modal.intro22">里拽枋 (Lǐ zhuāi fāng) — Inner Tie Beam: The inner counterpart to the outer tie beam, running along the interior side of the bracket cluster to balance the forces pulling from both sides.</p>
+                        <p data-translate="beijing.modal.intro23">升 (Shēng) — Small Bearing Block: The small square blocks that sit between the curved arms, raising and supporting each layer as the cluster grows upward and outward. The name literally means "to rise."</p>
+                        <p data-translate="beijing.modal.intro24">昂 (Áng) — Diagonal Cantilever Arm: One of the most important structural members. The áng is a long diagonal timber that acts as a lever — one end projects outward under the eaves to carry the roof load, while the other end is pinned down inside the building.</p>
+                        <p data-translate="beijing.modal.intro25">翘 (Qiào) — Upward-Curved Arm: A short curved arm that projects at 90 degrees to the main beam direction, building the bracket cluster outward in two directions simultaneously.</p>
+                    </div>
+                </div>
+
+                <!-- Page 4 -->
+                <div class="book-page">
+                    <div class="book-left">
+                        <img src="images/bracketRof7.jpg" alt="Temple Architecture" style="width: 100%; height: 400px; object-fit: cover; border-radius: 10px;">
+                        <img src="images/bracketRof8.jpeg" alt="Temple Architecture" style="width: 100%; height: 400px; object-fit: cover; border-radius: 10px; margin-top: 10px;">
+                    </div>
+                    <div class="book-right">
+                        <p data-translate="beijing.modal.intro26">斗 (Dǒu) — Main Block: The square or rectangular blocks that sit at every joint in the cluster, receiving the arms from below and supporting the arms above. They are the fundamental unit of the whole system. The bottom-most block, sitting directly on the column capital, is called the zuò dǒu (坐斗) or "seat block."</p>
+                        <p data-translate="beijing.modal.intro27">额枋 (É fāng) — Architrave Beam: The large horizontal beam that runs between columns at the top of the wall, just below where the bracket cluster begins. It is the main beam connecting all the columns together.</p>
+                        <p data-translate="beijing.modal.intro28">拱 (Gǒng) — Bow Arm: The curved, bow-shaped horizontal arms that extend outward from the column in all four directions. They give the system its spring-like quality — under heavy loads, they flex slightly, distributing stress rather than concentrating it.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="translations-final.js"></script>
+    <script src="script.js"></script>
+    <!-- AI Chat Script -->
+    <script src="ai-chat.js"></script>
+
+    <script>
+        /* ─────────────────────────────────────────
+           MODAL OPEN / CLOSE
+        ───────────────────────────────────────── */
+        function openModal(type) {
+            var modal = document.getElementById(type + 'Modal');
+            if (!modal) return;
+            modal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+
+            if (type === 'architecture') {
+                addZoomFunctionality();
+            }
+            if (type === 'visual') {
+                showStage(0);
+            }
+            if (type === 'bracket') {
+                showBracket(0);
+            }
+        }
+
+        function closeModal(type) {
+            var modal = document.getElementById(type + 'Modal');
+            if (!modal) return;
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Close modal when clicking outside content
+        window.onclick = function (event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        };
+
+        /* ─────────────────────────────────────────
+           FLIP CARD (Statues)
+        ───────────────────────────────────────── */
+        function flipCard(element) {
+            var card = element.querySelector('.statue-card');
+            card.classList.toggle('flipped');
+        }
+
+        /* ─────────────────────────────────────────
+           CONSTRUCTION STAGES WIDGET
+           (Visual Interactive Modal)
+           Uses prefixed IDs: v-cols, v-brackets, etc.
+        ───────────────────────────────────────── */
+        var stages = [
+            {
+                title: "Stage 1 — Laying the Foundation",
+                zh: "台基 Táijī",
+                showIds: ["v-found"],
+                hideIds: ["v-cols", "v-brackets", "v-roof", "v-deco"],
+                layers: [
+                    { color: "#D3D1C7", name: "White marble terrace", zh: "台基",  desc: "A raised stone platform up to 8 metres high, made of white marble quarried in Fangshan, 70 km away." },
+                    { color: "#888780", name: "Column base stones",   zh: "柱础",  desc: "Large circular stones set precisely into the platform mark where each wooden column will stand, protecting timber from moisture." },
+                    { color: "#B4B2A9", name: "Rammed earth fill",   zh: "夯土",  desc: "The platform core is compacted layers of earth and lime, giving the structure immense stability." }
+                ]
+            },
+            {
+                title: "Stage 2 — Raising the Timber Frame",
+                zh: "木作 Mùzuò",
+                showIds: ["v-found", "v-cols"],
+                hideIds: ["v-brackets", "v-roof", "v-deco"],
+                layers: [
+                    { color: "#E8580A", name: "Red-painted columns", zh: "金柱/檐柱", desc: "Giant nanmu and pine logs — sometimes 12 m tall — floated down rivers from forests in Sichuan and Yunnan." },
+                    { color: "#C04828", name: "Horizontal beams",    zh: "梁",        desc: "Heavy beams span between columns to form the load-bearing skeleton. No nails — only interlocking joinery." },
+                    { color: "#8B5A2B", name: "Purlin rails",        zh: "檩",        desc: "Smaller horizontal timbers run along the roof slope to carry the rafters above." }
+                ]
+            },
+            {
+                title: "Stage 3 — The Bracket System",
+                zh: "斗拱 Dǒugǒng",
+                showIds: ["v-found", "v-cols", "v-brackets"],
+                hideIds: ["v-roof", "v-deco"],
+                layers: [
+                    { color: "#8B5A2B", name: "Bracket clusters", zh: "斗拱", desc: "Sets of interlocking wooden blocks and arms (over 30 types!) project outward from column tops, spreading the roof's weight." },
+                    { color: "#6B3A0B", name: "Cantilever arms",  zh: "拱",   desc: "Each arm reaches further out, allowing huge roof overhangs without any outward wall support." },
+                    { color: "#A06830", name: "Block units",       zh: "斗",   desc: "Square blocks sit at each joint — the whole cluster acts like a spring, absorbing earthquake forces." }
+                ]
+            },
+            {
+                title: "Stage 4 — Tiling the Roof",
+                zh: "瓦作 Wǎzuò",
+                showIds: ["v-found", "v-cols", "v-brackets", "v-roof"],
+                hideIds: ["v-deco"],
+                layers: [
+                    { color: "#EF9F27", name: "Yellow glazed tiles",   zh: "黄色琉璃瓦", desc: "Imperial yellow — reserved exclusively for the emperor — fired at kilns in Mentougou. Over 1 million tiles cover the main halls." },
+                    { color: "#BA7517", name: "Hip-and-gable roof",    zh: "庑殿顶",     desc: "The four-sided 'hip' roof is the highest imperial form, with a gentle double curve that sweeps upward at the corners." },
+                    { color: "#854F0B", name: "Ridge guardian beasts", zh: "走兽",       desc: "Ceramic guardian figures (up to 10 per ridge) signal a building's rank — the more figures, the higher the status." }
+                ]
+            },
+            {
+                title: "Stage 5 — Painted Decoration",
+                zh: "彩画作 Cǎihuàzuò",
+                showIds: ["v-found", "v-cols", "v-brackets", "v-roof", "v-deco"],
+                hideIds: [],
+                layers: [
+                    { color: "#1D9E75", name: "Mineral pigment painting",  zh: "旋子彩画", desc: "Swirling dragon and floral patterns painted in lapis lazuli, malachite, and lead white on all exposed timber." },
+                    { color: "#D4537E", name: "Vermilion lacquer columns", zh: "红漆柱",   desc: "Columns are lacquered deep red — symbolising prosperity — and sealed against moisture and insects." },
+                    { color: "#533AB7", name: "Gold leaf highlights",      zh: "贴金",     desc: "Dragon motifs and key ornamental elements are finished with pure gold leaf, still gleaming after 600 years." }
+                ]
+            },
+            {
+                title: "Stage 6 — Final Assembly & Workforce",
+                zh: "完成 Wánchéng",
+                showIds: ["v-found", "v-cols", "v-brackets", "v-roof", "v-deco"],
+                hideIds: [],
+                layers: [
+                    { color: "#378ADD", name: "Massive workforce",  zh: "工匠",  desc: "Over 1 million workers and 100,000 skilled craftsmen laboured for 14 years (1406–1420) under the Yongle Emperor." },
+                    { color: "#185FA5", name: "Bamboo scaffolding", zh: "脚手架", desc: "Bamboo poles lashed together formed scaffolding around every storey — flexible enough to sway without breaking." },
+                    { color: "#0C447C", name: "Imperial oversight", zh: "督造",  desc: "Master architects used detailed scale models and technical drawings to coordinate all the trades across 980 buildings." }
+                ]
+            }
+        ];
+
+        function showStage(i) {
+            var s = stages[i];
+            // Update buttons scoped to visual modal
+            var btns = document.querySelectorAll('#visual-stage-btns .stage-btn');
+            btns.forEach(function (b, j) { b.classList.toggle('active', j === i); });
+            // Show/hide SVG layers
+            s.showIds.forEach(function (id) { var el = document.getElementById(id); if (el) el.style.opacity = '1'; });
+            s.hideIds.forEach(function (id) { var el = document.getElementById(id); if (el) el.style.opacity = '0'; });
+            // Render detail card
+            var html = '<div class="stage-title">' + s.title + ' <span class="zh">' + s.zh + '</span></div>';
+            s.layers.forEach(function (l) {
+                html += '<div class="layer-row">'
+                    + '<div class="layer-dot" style="background:' + l.color + '"></div>'
+                    + '<div class="layer-name">' + l.name + '<span class="zh">' + l.zh + '</span></div>'
+                    + '<div class="layer-desc">' + l.desc + '</div>'
+                    + '</div>';
+            });
+            document.getElementById('visual-detail-content').innerHTML = html;
+        }
+
+        /* ─────────────────────────────────────────
+           BRACKET SYSTEM WIDGET
+           Uses prefixed IDs: b-dou, b-arms-L, etc.
+        ───────────────────────────────────────── */
+        var bracketStages = [
+            {
+                title: "The Column — Foundation of the Bracket",
+                zh: "柱 Zhù",
+                show: [],
+                hide: ["b-dou", "b-arms-L", "b-arms-R", "b-arms-C", "b-ang", "b-beams", "b-rafters", "b-efang"],
+                layers: [
+                    { color: "#C04828", name: "Red-painted column", zh: "柱",  desc: "The giant nanmu or pine timber column carries all the roof weight straight down to the stone base below. No bracket system works without a strong column at its heart." },
+                    { color: "#888",    name: "Column base stone",   zh: "柱础", desc: "A carved circular stone sits between the timber column and the ground, preventing moisture from rotting the wood." },
+                    { color: "#D3D1C7", name: "Marble terrace",      zh: "台基", desc: "The raised white marble platform elevates the entire building, keeping all timber elements away from ground moisture and flooding." }
+                ]
+            },
+            {
+                title: "The Seat Block — Where It All Begins",
+                zh: "坐斗 Zuò Dǒu",
+                show: ["b-dou"],
+                hide: ["b-arms-L", "b-arms-R", "b-arms-C", "b-ang", "b-beams", "b-rafters", "b-efang"],
+                layers: [
+                    { color: "#4A2800", name: "Seat block (坐斗)", zh: "坐斗", desc: "The large square block sitting directly on top of the column capital. This is the foundation of the entire bracket cluster — everything stacks on top of it." },
+                    { color: "#6B3A0B", name: "Cap plate",          zh: "斗欹", desc: "A flat plate on top of the seat block provides a stable, level surface for the bow arms above to rest on, distributing force evenly in all directions." },
+                    { color: "#8B5A2B", name: "Small bearing blocks (升)", zh: "升", desc: "Smaller square blocks placed at every joint between arms and beams throughout the cluster. Their name means 'to rise.'" }
+                ]
+            },
+            {
+                title: "The Bow Arms — Spreading the Load",
+                zh: "拱 Gǒng",
+                show: ["b-dou", "b-arms-L", "b-arms-R", "b-arms-C"],
+                hide: ["b-ang", "b-beams", "b-rafters", "b-efang"],
+                layers: [
+                    { color: "#8B5A2B", name: "Bow arms (拱)",    zh: "拱",  desc: "Curved bow-shaped arms extend outward from the seat block in all four directions, spreading the roof weight over a wider and wider area." },
+                    { color: "#A06830", name: "Cross arms (翘)",  zh: "翘",  desc: "Short upward-curved arms project at 90 degrees to the main bow arms, building the bracket cluster outward in two directions simultaneously." },
+                    { color: "#6B3A0B", name: "Bearing blocks (升)", zh: "升", desc: "At every intersection of arms, a small square bearing block transfers the load from one arm to the next." }
+                ]
+            },
+            {
+                title: "The Diagonal Arm — The Cantilever",
+                zh: "昂 Áng",
+                show: ["b-dou", "b-arms-L", "b-arms-R", "b-arms-C", "b-ang"],
+                hide: ["b-beams", "b-rafters", "b-efang"],
+                layers: [
+                    { color: "#5C3A1A", name: "Diagonal arm (昂)",   zh: "昂",      desc: "A long diagonal timber arm acts as a lever — one end projects outward under the eaves, the other is pinned inside the building. Essentially a see-saw built into the bracket." },
+                    { color: "#8B5A2B", name: "Lever principle",      zh: "杠杆原理", desc: "The áng works on the same principle as a crane arm. The further it extends outward, the more roof overhang is possible without moving the column." },
+                    { color: "#A06830", name: "Seismic flexibility",  zh: "抗震性",   desc: "The diagonal arms can pivot slightly during an earthquake, acting as natural shock absorbers. Modern engineers have tested dǒugǒng clusters and found they outperform many rigid structures in seismic tests." }
+                ]
+            },
+            {
+                title: "The Eave Beams — Tying It Together",
+                zh: "枋 Fāng",
+                show: ["b-dou", "b-arms-L", "b-arms-R", "b-arms-C", "b-ang", "b-beams", "b-rafters", "b-efang"],
+                hide: [],
+                layers: [
+                    { color: "#6B3A0B", name: "Eave-projecting beam (挑檐枋)", zh: "挑檐枋", desc: "The outermost horizontal beam running along the top of all bracket clusters, tying them together along the full length of the building." },
+                    { color: "#8B5A2B", name: "Central tie beam (正心枋)",     zh: "正心枋", desc: "The beam running directly above the column line — the structural spine of the bracket layer. All forces from the roof above converge here." },
+                    { color: "#5C3A1A", name: "Flying rafters (飞椽)",         zh: "飞椽",   desc: "The outermost diagonal timber pieces that create the famous upward curve at the roof corners — the defining visual feature of Chinese imperial architecture." }
+                ]
+            },
+            {
+                title: "The Full Dǒugǒng System",
+                zh: "完整斗拱 Wánzhěng Dǒugǒng",
+                show: ["b-dou", "b-arms-L", "b-arms-R", "b-arms-C", "b-ang", "b-beams", "b-rafters", "b-efang"],
+                hide: [],
+                layers: [
+                    { color: "#BA7517", name: "No nails — pure joinery", zh: "无钉榫卯", desc: "The entire dǒugǒng system — sometimes 30+ individual pieces per cluster — is assembled without a single nail, screw, or adhesive." },
+                    { color: "#8B5A2B", name: "Rank indicator",           zh: "等级标志", desc: "Imperial law strictly regulated bracket size and complexity. Only the emperor's buildings could have the largest clusters." },
+                    { color: "#4A2800", name: "2,000 years of history",   zh: "两千年历史", desc: "The dǒugǒng system was first recorded over 2,000 years ago. The Song Dynasty manual Yingzao Fashi (1103 AD) codified over 30 standard bracket types — one of the world's earliest architectural engineering handbooks." }
+                ]
+            }
+        ];
+
+        function showBracket(i) {
+            var s = stages[i];
+            // Update buttons scoped to bracket modal
+            var btns = document.querySelectorAll('#bracket-stage-btns .stage-btn');
+            btns.forEach(function (b, j) { b.classList.toggle('active', j === i); });
+            // Always hide all, then show selected
+            var allIds = ["b-dou", "b-arms-L", "b-arms-R", "b-arms-C", "b-ang", "b-beams", "b-rafters", "b-efang"];
+            allIds.forEach(function (id) { var el = document.getElementById(id); if (el) el.style.opacity = '0'; });
+            s.show.forEach(function (id) { var el = document.getElementById(id); if (el) el.style.opacity = '1'; });
+            // Render detail card
+            var html = '<div class="stage-title">' + s.title + ' <span class="zh">' + s.zh + '</span></div>';
+            s.layers.forEach(function (l) {
+                html += '<div class="layer-row">'
+                    + '<div class="layer-dot" style="background:' + l.color + '"></div>'
+                    + '<div class="layer-name">' + l.name + '<span class="zh">' + l.zh + '</span></div>'
+                    + '<div class="layer-desc">' + l.desc + '</div>'
+                    + '</div>';
+            });
+            document.getElementById('bracket-detail-content').innerHTML = html;
+        }
+
+        /* ─────────────────────────────────────────
+           ZOOM FUNCTIONALITY (Architecture Modal)
+        ───────────────────────────────────────── */
+        function addZoomFunctionality() {
+            var images = document.querySelectorAll('#architectureModal .book-left img');
+            images.forEach(function (img) {
+                if (img._zoomAttached) return; // Prevent duplicate listeners
+                img._zoomAttached = true;
+
+                var currentScale = 1;
+                var isDragging = false;
+                var startY = 0;
+                var startTop = 0;
+
+                img.addEventListener('wheel', function (e) {
+                    e.preventDefault();
+                    currentScale = e.deltaY < 0
+                        ? Math.min(currentScale + 0.1, 3)
+                        : Math.max(currentScale - 0.1, 0.5);
+                    img.style.transform = 'scale(' + currentScale + ')';
+                });
+
+                img.addEventListener('mousedown', function (e) {
+                    if (e.button === 0) {
+                        isDragging = true;
+                        startY = e.clientY;
+                        startTop = img.offsetTop;
+                        img.style.cursor = 'grabbing';
+                        e.preventDefault();
+                    }
+                });
+
+                document.addEventListener('mousemove', function (e) {
+                    if (isDragging) {
+                        var deltaY = e.clientY - startY;
+                        img.style.transform = 'scale(' + currentScale + ') translateY(' + (startTop + deltaY) + 'px)';
+                    }
+                });
+
+                document.addEventListener('mouseup', function () {
+                    if (isDragging) {
+                        isDragging = false;
+                        img.style.cursor = 'pointer';
+                    }
+                });
+
+                img.addEventListener('mouseleave', function () {
+                    isDragging = false;
+                    img.style.transform = 'scale(1)';
+                    img.style.cursor = 'pointer';
+                    currentScale = 1;
+                });
+            });
+        }
+
+        /* ─────────────────────────────────────────
+           SMOOTH SCROLL
+        ───────────────────────────────────────── */
+        document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
+            anchor.addEventListener('click', function (e) {
+                var href = this.getAttribute('href');
+                if (href && href.length > 1) {
+                    var target = document.querySelector(href);
+                    if (target) {
+                        e.preventDefault();
+                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>

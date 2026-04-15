@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Guardian Roof Statues - Forbidden City</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: Georgia, 'Times New Roman', serif;
+      background: linear-gradient(135deg, #1a0000, #330000);
+      color: #ffd700;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      font-size: 32px;
+      text-align: center;
+      margin-bottom: 20px;
+      color: #ffd700;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+      font-family: "Cinzel", serif;
+    }
+
+    .subtitle {
+      text-align: center;
+      font-size: 16px;
+      margin-bottom: 40px;
+      color: #ffed4e;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.6;
+    }
+
+    .statues-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 30px;
+      margin-bottom: 40px;
+    }
+
+    .statue-item {
+      perspective: 1000px;
+      height: 400px;
+      cursor: pointer;
+    }
+
+    .statue-card {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 0.6s;
+    }
+
+    .statue-card.flipped {
+      transform: rotateY(180deg);
+    }
+
+    .statue-card-front, .statue-card-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      border-radius: 15px;
+      border: 2px solid rgba(212, 175, 55, 0.3);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+
+    .statue-card-front {
+      background: linear-gradient(135deg, rgba(139, 0, 0, 0.9), rgba(26, 0, 0, 0.9));
+    }
+
+    .statue-card-back {
+      transform: rotateY(180deg);
+      padding: 30px;
+      overflow-y: auto;
+      background: linear-gradient(135deg, rgba(26, 0, 0, 0.95), rgba(139, 0, 0, 0.95));
+    }
+
+    .statue-card-back p {
+      color: rgba(255, 215, 0, 0.9);
+      line-height: 1.6;
+      font-size: 0.95rem;
+      text-align: center;
+    }
+
+    .statue-card-front img {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+      border-radius: 10px 10px 0 0;
+    }
+
+    .statue-card-front h4 {
+      padding: 20px;
+      font-size: 18px;
+      color: #ffd700;
+      text-align: center;
+      font-weight: 600;
+    }
+
+    .back-button {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      background: rgba(139, 0, 0, 0.8);
+      color: #ffd700;
+      border: 2px solid rgba(212, 175, 55, 0.3);
+      padding: 12px 24px;
+      border-radius: 25px;
+      text-decoration: none;
+      font-size: 16px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      z-index: 1000;
+    }
+
+    .back-button:hover {
+      background: rgba(212, 175, 55, 0.2);
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(212, 175, 55, 0.3);
+    }
+
+    @media (max-width: 768px) {
+      .statues-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+      
+      .statue-item {
+        height: 350px;
+      }
+      
+      h1 {
+        font-size: 24px;
+      }
+      
+      .subtitle {
+        font-size: 14px;
+        padding: 0 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <a href="beijing.html" class="back-button">« Back to Beijing</a>
+  
+  <div class="container">
+    <h1>Guardian Roof Statues</h1>
+    <p class="subtitle">The roof statues of the Forbidden City serve both decorative and spiritual purposes, protecting the imperial buildings from evil spirits and bad fortune. Click on each statue to discover its meaning and symbolism.</p>
+    
+    <div class="statues-grid">
+      <div class="statue-item" onclick="flipCard(this)">
+        <div class="statue-card">
+          <div class="statue-card-front">
+            <img src="images/long.jpg" alt="Dragon Statue">
+            <h4> dragon: Imperial Dragon</h4>
+          </div>
+          <div class="statue-card-back">
+            <p>Symbolizing the Emperor. Since Qin Shi Huang was called "Ancestral Dragon," many ancient emperors considered the dragon to be the image of the ruler and called themselves "Sons of Heaven." Correspondingly, the image of the dragon became a symbol of the emperor. The reason the dragon has this meaning is closely related to the supernatural powers of dragons in ancient legends and myths, such as "ascending to heaven and diving into the abyss, summoning wind and rain."</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="statue-item" onclick="flipCard(this)">
+        <div class="statue-card">
+          <div class="statue-card-front">
+            <img src="images/suanni.jpg" alt="Phoenix Statue">
+            <h4> suan ni: Mythical beast</h4>
+          </div>
+          <div class="statue-card-back">
+            <p>The Suanni is a fierce mythical beast symbolizing the warding off of disasters. It resembles a lion, but differs in appearance: a lion has curly fur, while the Suanni has disheveled hair. The Han Dynasty dictionary Erya states: "The Suanni resembles a cat, and eats tigers and leopards." This means the Suanni resembles a cat (a type of light-furred tiger), is extremely fierce, and can devour tigers and leopards.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="statue-item" onclick="flipCard(this)">
+        <div class="statue-card">
+          <div class="statue-card-front">
+            <img src="images/shizi.jpg" alt="Lion Statue">
+            <h4> shizi: Guardian Lion</h4>
+          </div>
+          <div class="statue-card-back">
+            <p>The lion, symbolizing the warding off of disasters and evil spirits, is considered the king of beasts. Its noble and dignified image exudes a regal air, while also being majestic and auspicious, making it a treasure revered as a guardian of the nation. The ancient Indian Buddhist classic, the Mahaprajnaparamita Sutra, states that the lion is an incarnation of the Buddha and can drive away evil. Therefore, for the ancient ruling class and aristocracy, the lion's majestic image became a symbol of warding off disasters and evil spirits.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="statue-item" onclick="flipCard(this)">
+        <div class="statue-card">
+          <div class="statue-card-front">
+            <img src="images/tianma.jpg" alt="Tianma Statue">
+            <h4> Tian ma: Celestial horse</h4>
+          </div>
+          <div class="statue-card-back">
+            <p>The celestial horse is a mythical creature in the sky, symbolizing the warding off of disasters and evil spirits. A key difference between the celestial horse and the seahorse is that the celestial horse has wings, while the seahorse does not. The Book of Han records: "When Taiyi descended, the celestial horse was covered in red sweat, its foam flowing like ochre." Ancient people believed the celestial horse could travel a thousand miles a day and was a fearless, aerial mythical beast.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="statue-item" onclick="flipCard(this)">
+        <div class="statue-card">
+          <div class="statue-card-front">
+            <img src="images/yayu.jpg" alt="Yayu Statue">
+            <h4> Bi xi: Dragon Turtle</h4>
+          </div>
+          <div class="statue-card-back">
+            <p>The Bixi is a mythical creature with the body of a turtle and the head of a dragon. It symbolizes longevity, strength, and wisdom. In Chinese mythology, Bixi is one of the nine sons of the dragon and is often seen carrying stone steles or tablets, representing the burden of knowledge and the weight of history.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="statue-item" onclick="flipCard(this)">
+        <div class="statue-card">
+          <div class="statue-card-front">
+            <img src="images/haima.jpg" alt="Haima Statue">
+            <h4> Tao tie: Mythical Beast</h4>
+          </div>
+          <div class="statue-card-back">
+            <p>The Taotie is an ancient mythical beast from Chinese mythology, often depicted on bronze vessels from the Shang and Zhou dynasties. It represents greed and gluttony but also serves as a protective symbol. The Taotie motif is commonly found on ancient Chinese ritual bronzes and architectural elements.</p>
+          </div>
+        </div>
+      </div>
+
+ 
+    </div>
+  </div>
+
+  <script>
+    function flipCard(element) {
+      var card = element.querySelector('.statue-card');
+      card.classList.toggle('flipped');
+    }
+  </script>
+</body>
+</html>

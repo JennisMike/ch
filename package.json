@@ -1,0 +1,25 @@
+{
+  "name": "chinese-heritage-neon",
+  "version": "1.0.0",
+  "description": "Chinese Heritage Website with Neon PostgreSQL Database",
+  "scripts": {
+    "dev": "vercel dev",
+    "build": "node build-script.js",
+    "deploy": "vercel --prod"
+  },
+  "dependencies": {
+    "@neondatabase/serverless": "^0.9.0"
+  },
+  "devDependencies": {
+    "vercel": "^32.0.0"
+  },
+  "keywords": [
+    "chinese-heritage",
+    "neon-database",
+    "postgresql",
+    "serverless",
+    "vercel"
+  ],
+  "author": "Chinese Heritage Team",
+  "license": "MIT"
+}

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inline Translation Test</title>
+    <style>
+        body {
+            font-family: "Noto Sans SC", "Microsoft YaHei", "SimHei", sans-serif;
+            background: #1a0000;
+            color: white;
+            padding: 40px;
+            line-height: 1.6;
+        }
+        .test-container {
+            background: rgba(212, 175, 55, 0.1);
+            border-radius: 12px;
+            padding: 30px;
+            margin: 20px 0;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+        }
+        .test-item {
+            margin: 15px 0;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+        }
+        .lang-btn {
+            background: linear-gradient(135deg, #BB1E1E, #8B0000);
+            color: #FFD700;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        .result {
+            font-family: monospace;
+            background: #2a2a2a;
+            padding: 10px;
+            border-radius: 4px;
+            margin-top: 10px;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>🔍 Inline Translation Test</h1>
+        
+        <div class="test-item">
+            <h3>Static Chinese Test:</h3>
+            <p>Should show: 首页</p>
+            <p>Current display: <span id="static-test">首页</span></p>
+        </div>
+        
+        <div class="test-item">
+            <h3>JavaScript Test:</h3>
+            <button class="lang-btn" onclick="testInlineTranslation()">Test Inline Translation</button>
+            <p>Result: <span id="js-result">Click button</span></p>
+        </div>
+        
+        <div class="result" id="debug-info">
+            Debug information will appear here...
+        </div>
+    </div>
+
+    <script>
+        // Inline translation test
+        function testInlineTranslation() {
+            try {
+                // Test direct assignment
+                document.getElementById('static-test').textContent = '首页';
+                document.getElementById('js-result').textContent = '✅ Inline translation successful!';
+                
+                // Test language switching
+                const originalLang = document.documentElement.lang;
+                document.documentElement.lang = 'zh';
+                document.title = '中国遗产 - 探索中国建筑奇迹';
+                
+                // Update all translatable elements
+                const elements = document.querySelectorAll('[data-translate]');
+                elements.forEach(element => {
+                    const key = element.getAttribute('data-translate');
+                    if (key === 'nav.home') element.textContent = '首页';
+                    if (key === 'hero.title') element.textContent = '发现永恒的优雅';
+                });
+                
+                document.getElementById('js-result').textContent = '✅ Language switched to Chinese successfully!';
+                
+                // Switch back
+                setTimeout(() => {
+                    document.documentElement.lang = originalLang;
+                    document.title = 'Chinese Heritage - Discover China\'s Architectural Wonders';
+                }, 2000);
+                
+            } catch (error) {
+                document.getElementById('js-result').textContent = '❌ Error: ' + error.message;
+            }
+        }
+        
+        // Initialize
+        window.addEventListener('load', function() {
+            document.getElementById('debug-info').textContent = 'Page loaded. Ready for testing!';
+        });
+    </script>
+</body>
+</html>

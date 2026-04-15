@@ -1,0 +1,10 @@
+// City bios
+                'cities.beijing.bio': 'The heart of China dynasties - home to the world largest palace complex and over 600 years of imperial history.',
+                'cities.xian.bio': 'The heart of China dynasties - home to the legendary Terracotta Army, thousands of life-sized warriors guarding the eternal rest of Qin Shi Huang.',
+                'cities.hangzhou.bio': 'Suzhou is famous for its classical gardens, elegant bridges, and artistic windows. Known as the Venice of the East, it blends water, architecture, and nature into peaceful, living landscapes.',
+                'cities.suzhou.bio': 'Suzhou is famous for its classical gardens, elegant bridges, and artistic windows. Known as the Venice of the East, it blends water, architecture, and nature into peaceful, living landscapes.',
+                'cities.tianjin.bio': 'A historic port city where traditional Chinese architecture meets European colonial influence.',
+                'cities.jinan.bio': 'The City of Springs, famous for its natural springs and ancient Buddhist temples.',
+                'cities.changchun.bio': 'The Spring City of the North, once the capital of Manchukuo, with a unique architectural heritage.',
+                'cities.luoyang.bio': 'One of China ancient capitals, home to the famous Longmen Grottoes and thousands of Buddha statues.',
+                'cities.chengdu.bio': 'The land of pandas and ancient Shu culture, featuring traditional tea houses and historic streets.',

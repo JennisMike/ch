@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>China City Explorer | Interactive Map</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Noto+Sans+SC:wght@400;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+    <!-- Baidu Maps API -->
+    <script type="text/javascript" id="baidu-maps-script"></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(145deg, #8B0000 0%, #CD5C5C 100%);
+            font-family: 'Poppins', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 1rem;
+        }
+
+        .explore-card {
+            max-width: 1280px;
+            width: 100%;
+            background: #ffffff;
+            border-radius: 2.5rem;
+            box-shadow: 0 25px 45px -12px rgba(139, 0, 0, 0.35), 0 4px 12px rgba(139, 0, 0, 0.15);
+            overflow: hidden;
+        }
+
+        /* ── HEADER ── */
+        .card-header {
+            padding: 1.8rem 2rem 1.2rem 2rem;
+            background: linear-gradient(135deg, #8B0000 0%, #A52A2A 100%);
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #FFF8DC;
+            padding: 0.3rem 1rem;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #8B0000;
+            margin-bottom: 1rem;
+            border: 1px solid #D4AF37;
+        }
+
+        .card-header h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #D4AF37, #FFD700);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 0.4rem;
+        }
+
+        .sub {
+            color: #FFF8DC;
+            font-size: 0.95rem;
+            border-left: 3px solid #D4AF37;
+            padding-left: 0.85rem;
+        }
+
+        /* ── TWO-COLUMN LAYOUT ── */
+        .grid-two {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .info-panel {
+            flex: 1.2;
+            min-width: 260px;
+            background: #FFF8F0;
+            padding: 2rem 1.8rem;
+            border-right: 1px solid #e8c8c8;
+        }
+
+        .map-panel {
+            flex: 2.5;
+            min-width: 300px;
+            background: #FFF5EE;
+            padding: 1rem 1.8rem 2rem 1.8rem;
+        }
+
+        /* ── CITY BUTTONS ── */
+        .city-selector {
+            display: flex;
+            gap: 0.7rem;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+            border-bottom: 1px dashed #DC143C;
+            padding-bottom: 1.5rem;
+        }
+
+        .city-btn {
+            background: #FFF8DC;
+            border: 2px solid #8B0000;
+            font-size: 0.95rem;
+            font-weight: 600;
+            padding: 0.45rem 1.1rem;
+            border-radius: 40px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: #8B0000;
+            font-family: inherit;
+        }
+
+        .city-btn.active {
+            background: #8B0000;
+            color: #FFD700;
+            border-color: #8B0000;
+            box-shadow: 0 4px 12px rgba(139, 0, 0, 0.3);
+        }
+
+        .city-btn:hover:not(.active) {
+            background: #DC143C;
+            color: #FFD700;
+            border-color: #DC143C;
+        }
+
+        /* ── PIN LIST ── */
+        .locations-section h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #8B0000;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 1rem;
+        }
+
+        .pin-list {
+            list-style: none;
+        }
+
+        .pin-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            padding: 0.65rem 0;
+            border-bottom: 1px solid #f0d0d0;
+            font-size: 0.9rem;
+            color: #8B0000;
+        }
+
+        .pin-list li:last-child {
+            border-bottom: none;
+        }
+
+        .pin-icon {
+            font-size: 1.1rem;
+            min-width: 24px;
+            text-align: center;
+            margin-top: 1px;
+        }
+
+        .pin-name {
+            font-weight: 500;
+            line-height: 1.4;
+        }
+
+        .pin-desc {
+            font-size: 0.75rem;
+            color: #a05050;
+            margin-top: 2px;
+        }
+
+        .city-note {
+            margin-top: 1.5rem;
+            background: linear-gradient(135deg, #8B0000 0%, #A52A2A 100%);
+            padding: 1rem 1.2rem;
+            border-radius: 1rem;
+            font-size: 0.82rem;
+            color: #FFD700;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            border: 1px solid #D4AF37;
+        }
+
+        /* ── MAP ── */
+        .map-wrapper {
+            position: relative;
+            flex: 1;
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            background: linear-gradient(145deg, #f8f9fa 0%, #e9ecef 100%);
+            border: 2px solid #D4AF37;
+            min-height: 650px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        #container {
+            width: 100%;
+            height: 700px;
+            border-radius: 0.8rem;
+            position: relative;
+            z-index: 1;
+            min-height: 600px;
+        }
+
+        .map-footer {
+            font-size: 0.8rem;
+            text-align: center;
+            padding: 12px 16px;
+            color: #8B0000;
+            background: linear-gradient(135deg, #FFF8DC 0%, #F5DEB3 100%);
+            border-top: 2px solid #D4AF37;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        .legend-tip {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 16px;
+            margin-top: 12px;
+            font-size: 0.75rem;
+            color: #8B0000;
+            font-weight: 500;
+            padding: 8px 12px;
+            background: rgba(255, 248, 220, 0.8);
+            border-radius: 8px;
+            border: 1px solid #D4AF37;
+        }
+
+        .legend-dot {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 4px;
+            vertical-align: middle;
+        }
+
+        /* ── BACK BUTTON ── */
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: linear-gradient(135deg, #8B0000 0%, #A52A2A 100%);
+            border: 2px solid #D4AF37;
+            padding: 0.5rem 1.1rem;
+            border-radius: 0.6rem;
+            cursor: pointer;
+            font-size: 0.88rem;
+            color: #FFD700;
+            text-decoration: none;
+            transition: all 0.25s ease;
+            margin-bottom: 1rem;
+        }
+
+        .back-btn:hover {
+            background: linear-gradient(135deg, #A52A2A 0%, #DC143C 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(139, 0, 0, 0.4);
+        }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 780px) {
+            .grid-two { flex-direction: column; }
+            .info-panel { border-right: none; border-bottom: 1px solid #e8c8c8; padding: 1.5rem; }
+            .map-panel { padding: 1.5rem; }
+            #mapContainer { height: 320px; }
+            .card-header h2 { font-size: 1.5rem; }
+        }
+
+        @media (max-width: 480px) {
+            .city-btn { font-size: 0.85rem; padding: 0.4rem 0.9rem; }
+            .pin-list li { font-size: 0.85rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div style="width:100%; max-width:1280px;">
+
+        <a href="index.html" class="back-btn">
+            <i class="fas fa-arrow-left"></i> Back to Home
+        </a>
+
+        <div class="explore-card">
+
+            <!-- HEADER -->
+            <div class="card-header">
+                <div class="badge">📍 Baidu Maps · China Explorer</div>
+                <h2>Explore the Cities</h2>
+                <div class="sub">Interactive pins — discover cultural gems in Beijing, Xi'an &amp; Suzhou</div>
+            </div>
+
+            <div class="grid-two">
+
+                <!-- LEFT: city selector + pin list -->
+                <div class="info-panel">
+                    <div class="city-selector">
+                        <button class="city-btn active" data-city="beijing">🇨🇳 北京 Beijing</button>
+                        <button class="city-btn" data-city="xian">🏯 西安 Xi'an</button>
+                        <button class="city-btn" data-city="suzhou">🌿 苏州 Suzhou</button>
+                    </div>
+
+                    <div class="locations-section">
+                        <h3><span>📍</span> Famous Landmarks</h3>
+                        <ul class="pin-list" id="pinList"></ul>
+                        <div class="city-note">
+                            <span>🗺️</span>
+                            <span>Click any city button to update the map and explore its cultural landmarks.</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- RIGHT: Baidu Map -->
+                <div class="map-panel">
+                    <div class="map-wrapper">
+                        <div id="container" style="height: 100%;"></div>
+                        <div class="map-footer">
+                            🗺️ Powered by Baidu Maps — click a pin to learn more
+                        </div>
+                    </div>
+                    <div class="legend-tip">
+                        <span><span class="legend-dot" style="background:#DC143C;"></span> Historic site</span>
+                        <span><span class="legend-dot" style="background:#D4AF37;"></span> Garden / park</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Load Baidu Maps API key from build-time environment variables
+        function loadBaiduMapsAPI() {
+            // For Vercel deployment, environment variables are injected at build time
+            // The BAIDU_MAPS_API_KEY will be replaced by Vercel during build
+            const apiKey = '%%BAIDU_MAPS_API_KEY%%';
+            
+            // Check if the placeholder was replaced
+            if (apiKey === '%%BAIDU_MAPS_API_KEY%%') {
+                console.warn('BAIDU_MAPS_API_KEY not found. Please set environment variable in Vercel or use local .env file');
+                document.getElementById('container').innerHTML = '<div style="padding:20px;text-align:center;color:red;">Baidu Maps API key not configured. Please set BAIDU_MAPS_API_KEY environment variable.</div>';
+                return;
+            }
+            
+            const script = document.getElementById('baidu-maps-script');
+            script.src = `https://api.map.baidu.com/api?v=1.0&type=webgl&ak=${apiKey}`;
+            script.onload = () => {
+                console.log('Baidu Maps API script loaded successfully');
+                // Initialize map after script loads
+                setTimeout(() => {
+                    if (typeof BMapGL !== 'undefined') {
+                        initBaiduMap();
+                    } else {
+                        console.error('Baidu Maps API failed to load');
+                        document.getElementById('container').innerHTML = '<div style="padding:20px;text-align:center;color:red;">Failed to load Baidu Maps. Please check your internet connection and API key.</div>';
+                    }
+                }, 500);
+            };
+            script.onerror = () => {
+                console.error('Failed to load Baidu Maps API script');
+                document.getElementById('container').innerHTML = '<div style="padding:20px;text-align:center;color:red;">Failed to load Baidu Maps. Please check your internet connection.</div>';
+            };
+        }
+
+        // Load API key and then initialize map
+        loadBaiduMapsAPI();
+
+        // ── City data ──────────────────────────────────────────────────────────
+        const cityData = {
+            beijing: {
+                center: [39.9042, 116.4074],
+                zoom: 12,
+                pins: [
+                    { name: "Forbidden City (紫禁城)",        lat: 39.9163, lng: 116.3972, desc: "UNESCO World Heritage imperial palace" },
+                    { name: "Temple of Heaven (天坛)",        lat: 39.8822, lng: 116.4066, desc: "Imperial sacrifice altar & park" },
+                    { name: "Summer Palace (颐和园)",         lat: 39.9990, lng: 116.2750, desc: "Royal garden masterpiece on Kunming Lake" },
+                    { name: "Tiananmen Square (天安门广场)",  lat: 39.9055, lng: 116.3976, desc: "Iconic central square of Beijing" }
+                ]
+            },
+            xian: {
+                center: [34.3416, 108.9402],
+                zoom: 13,
+                pins: [
+                    { name: "City Wall (西安城墙)",            lat: 34.2610, lng: 108.9480, desc: "Best-preserved ancient city wall in China" },
+                    { name: "Big Wild Goose Pagoda (大雁塔)",  lat: 34.2192, lng: 108.9600, desc: "Tang-dynasty Buddhist pagoda" },
+                    { name: "Great Mosque (化觉巷清真寺)",     lat: 34.2630, lng: 108.9360, desc: "Historic mosque in the Muslim Quarter" },
+                    { name: "Bell Tower (钟楼)",               lat: 34.2610, lng: 108.9400, desc: "Symbolic city-centre landmark" }
+                ]
+            },
+            suzhou: {
+                center: [31.2994, 120.6196],
+                zoom: 13,
+                pins: [
+                    { name: "Humble Administrator's Garden (拙政园)", lat: 31.3260, lng: 120.6290, desc: "Largest classical garden in Suzhou" },
+                    { name: "Lion Grove Garden (狮子林)",              lat: 31.3230, lng: 120.6310, desc: "Famous rockery labyrinth" },
+                    { name: "Lingering Garden (留园)",                 lat: 31.3170, lng: 120.5970, desc: "UNESCO World Heritage classical garden" }
+                ]
+            }
+        };
+
+        // ── Initialise Baidu Map ─────────────────────────────────────────────
+        function initBaiduMap() {
+            try {
+                var map = new BMapGL.Map("container");
+                var beijingPoint = new BMapGL.Point(116.4074, 39.9042);
+                map.centerAndZoom(beijingPoint, 12);
+                map.enableScrollWheelZoom(true);
+                map.enableKeyboard();
+                
+                // Load initial city markers
+                switchCity('beijing');
+                
+                console.log('Baidu Map initialized successfully');
+                return map;
+            } catch (error) {
+                console.error('Failed to initialize Baidu Map:', error);
+                document.getElementById('container').innerHTML = '<div style="padding:20px;text-align:center;color:red;">Failed to load Baidu Maps. Please check your internet connection and API key.</div>';
+            }
+        }
+        
+        // Map initialization is now handled by loadBaiduMapsAPI() function
+
+        let currentMarkers = [];
+
+        function clearMarkers() {
+            currentMarkers.forEach(m => map.removeOverlay(m));
+            currentMarkers = [];
+        }
+
+        function addMarkersForCity(cityKey) {
+            clearMarkers();
+            const data = cityData[cityKey];
+            if (!data) return;
+
+            const bounds = [];
+
+            data.pins.forEach(function(pin) {
+                var point = new BMapGL.Point(pin.lng, pin.lat);
+                var marker = new BMapGL.Marker(point);
+                marker.setTitle(pin.name);
+                
+                // Add info window for marker
+                var infoWindow = new BMapGL.InfoWindow();
+                var content = '<div style="padding:10px;"><strong style="color:#8B0000; font-size:0.9rem;">📍 ' + pin.name + '</strong><br><span style="font-size:0.8rem; color:#555;">' + pin.desc + '</span></div>';
+                infoWindow.setContent(content);
+                
+                marker.addEventListener('click', function() {
+                    map.openInfoWindow(infoWindow, point);
+                });
+                
+                map.addOverlay(marker);
+                currentMarkers.push(marker);
+            });
+
+            // Center map on city
+            var cityPoint = new BMapGL.Point(data.center.lng, data.center.lat);
+            map.centerAndZoom(cityPoint, data.zoom);
+        }
+
+        // ── Update sidebar pin list ────────────────────────────────────────────
+        function updatePinList(cityKey) {
+            const pinListEl = document.getElementById('pinList');
+            pinListEl.innerHTML = '';
+            cityData[cityKey].pins.forEach(function(pin) {
+                const li = document.createElement('li');
+                li.innerHTML =
+                    '<div class="pin-icon">📌</div>' +
+                    '<div>' +
+                        '<div class="pin-name">' + pin.name + '</div>' +
+                        '<div class="pin-desc">' + pin.desc + '</div>' +
+                    '</div>';
+                pinListEl.appendChild(li);
+            });
+        }
+
+        // ── Switch city ────────────────────────────────────────────────────────
+        function switchCity(cityKey) {
+            document.querySelectorAll('.city-btn').forEach(function(btn) {
+                btn.classList.toggle('active', btn.getAttribute('data-city') === cityKey);
+            });
+            updatePinList(cityKey);
+            addMarkersForCity(cityKey);
+        }
+
+        // ── Button click events ────────────────────────────────────────────────
+        document.querySelectorAll('.city-btn').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                switchCity(this.getAttribute('data-city'));
+            });
+        });
+
+            </script>
+</body>
+</html>

@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neon Database Admin - Chinese Heritage</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Poppins", sans-serif;
+            background: linear-gradient(-45deg, #8B0000, #1a0000, #3d0000, #000000);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+            min-height: 100vh;
+            color: white;
+        }
+
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .admin-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 250px;
+            background: rgba(10, 0, 0, 0.95);
+            border-right: 1px solid rgba(212, 175, 55, 0.25);
+            padding: 2rem 1rem;
+            overflow-y: auto;
+        }
+
+        .sidebar h2 {
+            color: #D4AF37;
+            margin-bottom: 2rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .nav-item {
+            display: block;
+            padding: 1rem;
+            margin-bottom: 0.5rem;
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid rgba(212, 175, 55, 0.25);
+            border-radius: 8px;
+            color: #FFD700;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .nav-item:hover, .nav-item.active {
+            background: rgba(212, 175, 55, 0.25);
+            transform: translateX(4px);
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 2rem;
+            overflow-y: auto;
+        }
+
+        .content-section {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .card {
+            background: rgba(10, 0, 0, 0.95);
+            border: 1px solid rgba(212, 175, 55, 0.25);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(12px);
+        }
+
+        .card h3 {
+            color: #D4AF37;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+
+        .status-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .status-item {
+            background: rgba(212, 175, 55, 0.1);
+            padding: 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+            border: 1px solid rgba(212, 175, 55, 0.25);
+        }
+
+        .status-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #FFD700;
+            margin-bottom: 0.5rem;
+        }
+
+        .status-label {
+            font-size: 0.9rem;
+            color: #FFF8DC;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #FFD700;
+            font-weight: 500;
+        }
+
+        .form-input, .form-select, .form-textarea {
+            width: 100%;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(212, 175, 55, 0.25);
+            border-radius: 8px;
+            color: white;
+            font-family: "Poppins", sans-serif;
+            font-size: 1rem;
+        }
+
+        .form-textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #BB1E1E, #8B0000);
+            color: #FFD700;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-family: "Poppins", sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid #D4AF37;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(187, 30, 30, 0.5);
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        .data-table th,
+        .data-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(212, 175, 55, 0.25);
+        }
+
+        .data-table th {
+            background: rgba(212, 175, 55, 0.1);
+            color: #FFD700;
+            font-weight: 600;
+        }
+
+        .notification {
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            padding: 1rem 1.5rem;
+            background: rgba(212, 175, 55, 0.95);
+            border: 1px solid #FFD700;
+            border-radius: 8px;
+            color: white;
+            z-index: 1000;
+            animation: slideIn 0.5s ease;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        .success { background: rgba(34, 197, 94, 0.95); border-color: #22C55E; }
+        .error { background: rgba(220, 38, 38, 0.95); border-color: #DC2626; }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <!-- Sidebar Navigation -->
+        <div class="sidebar">
+            <h2>🗄️ Neon Admin</h2>
+            <nav>
+                <div class="nav-item active" data-section="dashboard">📊 Dashboard</div>
+                <div class="nav-item" data-section="database">🗄️ Database</div>
+                <div class="nav-item" data-section="users">👥 Users</div>
+                <div class="nav-item" data-section="cities">🏛️ Cities</div>
+                <div class="nav-item" data-section="landmarks">🏛️ Landmarks</div>
+                <div class="nav-item" data-section="translations">🌐 Translations</div>
+                <div class="nav-item" data-section="settings">⚙️ Settings</div>
+            </nav>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Dashboard Section -->
+            <div id="dashboard" class="content-section active">
+                <div class="card">
+                    <h3>📊 Database Dashboard</h3>
+                    <div class="status-grid">
+                        <div class="status-item">
+                            <div class="status-number" id="totalUsers">0</div>
+                            <div class="status-label">Total Users</div>
+                        </div>
+                        <div class="status-item">
+                            <div class="status-number" id="totalCities">0</div>
+                            <div class="status-label">Cities</div>
+                        </div>
+                        <div class="status-item">
+                            <div class="status-number" id="totalLandmarks">0</div>
+                            <div class="status-label">Landmarks</div>
+                        </div>
+                        <div class="status-item">
+                            <div class="status-number" id="totalTranslations">0</div>
+                            <div class="status-label">Translations</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>🔗 Database Status</h3>
+                    <div id="dbStatus">
+                        <div class="status-item">
+                            <div class="status-label">Connection:</div>
+                            <div class="status-number" id="dbConnection">Checking...</div>
+                        </div>
+                        <div class="status-item">
+                            <div class="status-label">Mode:</div>
+                            <div class="status-number" id="dbMode">Checking...</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Database Section -->
+            <div id="database" class="content-section">
+                <div class="card">
+                    <h3>🗄️ Database Operations</h3>
+                    <div class="form-group">
+                        <label class="form-label">Operation</label>
+                        <select class="form-select" id="operationType">
+                            <option value="init">Initialize Database</option>
+                            <option value="migrate">Migrate Data</option>
+                            <option value="sync">Sync Data</option>
+                            <option value="clear">Clear Cache</option>
+                            <option value="backup">Backup Data</option>
+                        </select>
+                    </div>
+                    <button class="btn" onclick="executeOperation()">Execute Operation</button>
+                </div>
+            </div>
+
+            <!-- Users Section -->
+            <div id="users" class="content-section">
+                <div class="card">
+                    <h3>👥 User Management</h3>
+                    <button class="btn" onclick="loadUsers()">Load Users</button>
+                    <div id="usersList"></div>
+                </div>
+            </div>
+
+            <!-- Cities Section -->
+            <div id="cities" class="content-section">
+                <div class="card">
+                    <h3>🏛️ City Management</h3>
+                    <div class="form-group">
+                        <label class="form-label">City Name</label>
+                        <input type="text" class="form-input" id="cityName" placeholder="e.g., Beijing">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Chinese Name</label>
+                        <input type="text" class="form-input" id="cityChineseName" placeholder="e.g., 北京">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Description</label>
+                        <textarea class="form-textarea" id="cityDescription" placeholder="City description..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Latitude</label>
+                        <input type="number" step="0.0001" class="form-input" id="cityLat" placeholder="39.9042">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Longitude</label>
+                        <input type="number" step="0.0001" class="form-input" id="cityLng" placeholder="116.4074">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Zoom Level</label>
+                        <input type="number" class="form-input" id="cityZoom" placeholder="12">
+                    </div>
+                    <button class="btn" onclick="saveCity()">Save City</button>
+                    <button class="btn" onclick="loadCities()">Load Cities</button>
+                </div>
+            </div>
+
+            <!-- Landmarks Section -->
+            <div id="landmarks" class="content-section">
+                <div class="card">
+                    <h3>🏛️ Landmark Management</h3>
+                    <div class="form-group">
+                        <label class="form-label">City</label>
+                        <select class="form-select" id="landmarkCity">
+                            <option value="">Select City</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Landmark Name</label>
+                        <input type="text" class="form-input" id="landmarkName" placeholder="e.g., Forbidden City">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Chinese Name</label>
+                        <input type="text" class="form-input" id="landmarkChineseName" placeholder="e.g., 紫禁城">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Category</label>
+                        <select class="form-select" id="landmarkCategory">
+                            <option value="palace">Palace</option>
+                            <option value="temple">Temple</option>
+                            <option value="garden">Garden</option>
+                            <option value="wall">Wall</option>
+                            <option value="pagoda">Pagoda</option>
+                            <option value="mosque">Mosque</option>
+                            <option value="tower">Tower</option>
+                            <option value="square">Square</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Description</label>
+                        <textarea class="form-textarea" id="landmarkDescription" placeholder="Landmark description..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Latitude</label>
+                        <input type="number" step="0.0001" class="form-input" id="landmarkLat" placeholder="39.9163">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Longitude</label>
+                        <input type="number" step="0.0001" class="form-input" id="landmarkLng" placeholder="116.3972">
+                    </div>
+                    <button class="btn" onclick="saveLandmark()">Save Landmark</button>
+                    <button class="btn" onclick="loadLandmarks()">Load Landmarks</button>
+                </div>
+            </div>
+
+            <!-- Translations Section -->
+            <div id="translations" class="content-section">
+                <div class="card">
+                    <h3>🌐 Translation Management</h3>
+                    <div class="form-group">
+                        <label class="form-label">Translation Key</label>
+                        <input type="text" class="form-input" id="translationKey" placeholder="e.g., cities.beijing.bio">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">English</label>
+                        <textarea class="form-textarea" id="translationEn" placeholder="English translation..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Chinese</label>
+                        <textarea class="form-textarea" id="translationZh" placeholder="Chinese translation..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Arabic</label>
+                        <textarea class="form-textarea" id="translationAr" placeholder="Arabic translation..."></textarea>
+                    </div>
+                    <button class="btn" onclick="saveTranslation()">Save Translation</button>
+                    <button class="btn" onclick="loadTranslations()">Load Translations</button>
+                </div>
+            </div>
+
+            <!-- Settings Section -->
+            <div id="settings" class="content-section">
+                <div class="card">
+                    <h3>⚙️ Database Settings</h3>
+                    <div class="form-group">
+                        <label class="form-label">
+                            <input type="checkbox" id="useNeon" checked> Use Neon Database
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Connection String</label>
+                        <input type="text" class="form-input" id="connectionString" value="" readonly>
+                    </div>
+                    <button class="btn" onclick="saveSettings()">Save Settings</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Container -->
+    <div id="notification" style="display: none;"></div>
+
+    <!-- Scripts -->
+    <script src="database-neon.js"></script>
+    <script src="data-manager-neon.js"></script>
+    <script>
+        // Neon Admin Panel JavaScript
+        let currentSection = 'dashboard';
+
+        // Load Neon DB connection string from build-time environment variables
+        function loadNeonConnectionString() {
+            // For Vercel deployment, environment variables are injected at build time
+            // The NEON_DB_CONNECTION_STRING will be replaced by Vercel during build
+            const connectionString = '%%NEON_DB_CONNECTION_STRING%%';
+            
+            // Check if the placeholder was replaced
+            if (connectionString === '%%NEON_DB_CONNECTION_STRING%%') {
+                console.warn('NEON_DB_CONNECTION_STRING not found. Please set environment variable in Vercel or use local .env file');
+                document.getElementById('connectionString').placeholder = 'Neon DB connection string not configured';
+                return;
+            }
+            
+            document.getElementById('connectionString').value = connectionString;
+            console.log('Neon DB connection string loaded from environment variables');
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', async () => {
+            loadNeonConnectionString();
+            await initializeAdmin();
+            setupNavigation();
+            updateDashboard();
+            updateDatabaseStatus();
+        });
+
+        // Setup navigation
+        function setupNavigation() {
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.addEventListener('click', () => {
+                    const section = item.dataset.section;
+                    switchSection(section);
+                });
+            });
+        }
+
+        // Switch sections
+        function switchSection(section) {
+            document.querySelectorAll('.content-section').forEach(sec => {
+                sec.classList.remove('active');
+            });
+            document.querySelectorAll('.nav-item').forEach(nav => {
+                nav.classList.remove('active');
+            });
+
+            document.getElementById(section).classList.add('active');
+            document.querySelector(`[data-section="${section}"]`).classList.add('active');
+            currentSection = section;
+        }
+
+        // Initialize admin
+        async function initializeAdmin() {
+            try {
+                if (window.dataManager) {
+                    await window.dataManager.init();
+                    showNotification('Data manager initialized successfully', 'success');
+                }
+            } catch (error) {
+                showNotification('Failed to initialize data manager: ' + error.message, 'error');
+            }
+        }
+
+        // Update dashboard
+        async function updateDashboard() {
+            try {
+                if (window.dataManager) {
+                    const users = await window.dataManager.getAllUsers();
+                    const cities = await window.dataManager.getCities();
+                    const landmarks = await window.dataManager.getLandmarks(1); // Get landmarks for first city
+                    const translations = await window.dataManager.getTranslations();
+
+                    document.getElementById('totalUsers').textContent = users.length;
+                    document.getElementById('totalCities').textContent = cities.length;
+                    document.getElementById('totalLandmarks').textContent = landmarks.length;
+                    document.getElementById('totalTranslations').textContent = translations.length;
+                }
+            } catch (error) {
+                showNotification('Failed to update dashboard: ' + error.message, 'error');
+            }
+        }
+
+        // Update database status
+        function updateDatabaseStatus() {
+            if (window.neonDB) {
+                const status = window.neonDB.getDatabaseStatus();
+                document.getElementById('dbConnection').textContent = status.connected ? 'Connected' : 'Disconnected';
+                document.getElementById('dbMode').textContent = status.usingNeon ? 'Neon' : 'Local';
+            }
+        }
+
+        // Execute database operation
+        async function executeOperation() {
+            const operation = document.getElementById('operationType').value;
+            
+            try {
+                switch (operation) {
+                    case 'init':
+                        await window.dataManager.init();
+                        showNotification('Database initialized', 'success');
+                        break;
+                    case 'migrate':
+                        await window.dataManager.migrateExistingData();
+                        showNotification('Data migration completed', 'success');
+                        break;
+                    case 'sync':
+                        await window.dataManager.syncQueue();
+                        showNotification('Data sync completed', 'success');
+                        break;
+                    case 'clear':
+                        await window.dataManager.clearCache();
+                        showNotification('Cache cleared', 'success');
+                        break;
+                    case 'backup':
+                        showNotification('Backup feature coming soon', 'success');
+                        break;
+                }
+            } catch (error) {
+                showNotification('Operation failed: ' + error.message, 'error');
+            }
+        }
+
+        // Load users
+        async function loadUsers() {
+            try {
+                const users = await window.dataManager.getAllUsers();
+                displayUsers(users);
+            } catch (error) {
+                showNotification('Failed to load users: ' + error.message, 'error');
+            }
+        }
+
+        // Display users
+        function displayUsers(users) {
+            const container = document.getElementById('usersList');
+            container.innerHTML = '';
+
+            if (users.length === 0) {
+                container.innerHTML = '<p>No users found</p>';
+                return;
+            }
+
+            const table = document.createElement('table');
+            table.className = 'data-table';
+            table.innerHTML = `
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Joined</th>
+                        <th>Login Count</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            `;
+
+            users.forEach(user => {
+                const row = table.tBodies[0].insertRow();
+                row.innerHTML = `
+                    <td>${user.id}</td>
+                    <td>${user.fullName}</td>
+                    <td>${user.email}</td>
+                    <td>${new Date(user.createdAt).toLocaleDateString()}</td>
+                    <td>${user.loginCount || 0}</td>
+                `;
+            });
+
+            container.appendChild(table);
+        }
+
+        // Save city
+        async function saveCity() {
+            const cityData = {
+                name: document.getElementById('cityName').value,
+                chineseName: document.getElementById('cityChineseName').value,
+                description: document.getElementById('cityDescription').value,
+                center: {
+                    lat: parseFloat(document.getElementById('cityLat').value),
+                    lng: parseFloat(document.getElementById('cityLng').value)
+                },
+                zoom: parseInt(document.getElementById('cityZoom').value)
+            };
+
+            try {
+                const result = await window.dataManager.saveCity(cityData);
+                if (result.success) {
+                    showNotification('City saved successfully', 'success');
+                    clearCityForm();
+                } else {
+                    showNotification('Failed to save city', 'error');
+                }
+            } catch (error) {
+                showNotification('Error saving city: ' + error.message, 'error');
+            }
+        }
+
+        // Clear city form
+        function clearCityForm() {
+            document.getElementById('cityName').value = '';
+            document.getElementById('cityChineseName').value = '';
+            document.getElementById('cityDescription').value = '';
+            document.getElementById('cityLat').value = '';
+            document.getElementById('cityLng').value = '';
+            document.getElementById('cityZoom').value = '';
+        }
+
+        // Save landmark
+        async function saveLandmark() {
+            const landmarkData = {
+                cityId: parseInt(document.getElementById('landmarkCity').value),
+                name: document.getElementById('landmarkName').value,
+                chineseName: document.getElementById('landmarkChineseName').value,
+                description: document.getElementById('landmarkDescription').value,
+                latitude: parseFloat(document.getElementById('landmarkLat').value),
+                longitude: parseFloat(document.getElementById('landmarkLng').value),
+                category: document.getElementById('landmarkCategory').value
+            };
+
+            try {
+                const result = await window.dataManager.saveLandmark(landmarkData);
+                if (result.success) {
+                    showNotification('Landmark saved successfully', 'success');
+                    clearLandmarkForm();
+                } else {
+                    showNotification('Failed to save landmark', 'error');
+                }
+            } catch (error) {
+                showNotification('Error saving landmark: ' + error.message, 'error');
+            }
+        }
+
+        // Clear landmark form
+        function clearLandmarkForm() {
+            document.getElementById('landmarkCity').value = '';
+            document.getElementById('landmarkName').value = '';
+            document.getElementById('landmarkChineseName').value = '';
+            document.getElementById('landmarkDescription').value = '';
+            document.getElementById('landmarkLat').value = '';
+            document.getElementById('landmarkLng').value = '';
+            document.getElementById('landmarkCategory').value = 'palace';
+        }
+
+        // Save translation
+        async function saveTranslation() {
+            const translationData = {
+                key: document.getElementById('translationKey').value,
+                english: document.getElementById('translationEn').value,
+                chinese: document.getElementById('translationZh').value,
+                arabic: document.getElementById('translationAr').value
+            };
+
+            try {
+                const result = await window.dataManager.saveTranslation(
+                    translationData.key,
+                    translationData.english,
+                    translationData.chinese,
+                    translationData.arabic
+                );
+                
+                if (result.success) {
+                    showNotification('Translation saved successfully', 'success');
+                    clearTranslationForm();
+                } else {
+                    showNotification('Failed to save translation', 'error');
+                }
+            } catch (error) {
+                showNotification('Error saving translation: ' + error.message, 'error');
+            }
+        }
+
+        // Clear translation form
+        function clearTranslationForm() {
+            document.getElementById('translationKey').value = '';
+            document.getElementById('translationEn').value = '';
+            document.getElementById('translationZh').value = '';
+            document.getElementById('translationAr').value = '';
+        }
+
+        // Show notification
+        function showNotification(message, type = 'success') {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.className = `notification ${type}`;
+            notification.style.display = 'block';
+
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 5000);
+        }
+
+        // Load cities (for landmark city selection)
+        async function loadCities() {
+            try {
+                const cities = await window.dataManager.getCities();
+                const select = document.getElementById('landmarkCity');
+                select.innerHTML = '<option value="">Select City</option>';
+                
+                cities.forEach(city => {
+                    const option = document.createElement('option');
+                    option.value = city.id || city.name;
+                    option.textContent = `${city.name} (${city.chineseName})`;
+                    select.appendChild(option);
+                });
+                
+                showNotification('Cities loaded', 'success');
+            } catch (error) {
+                showNotification('Failed to load cities: ' + error.message, 'error');
+            }
+        }
+
+        // Load translations
+        async function loadTranslations() {
+            try {
+                const translations = await window.dataManager.getTranslations();
+                console.log('Loaded translations:', translations);
+                showNotification(`Loaded ${translations.length} translations`, 'success');
+            } catch (error) {
+                showNotification('Failed to load translations: ' + error.message, 'error');
+            }
+        }
+
+        // Save settings
+        function saveSettings() {
+            const useNeon = document.getElementById('useNeon').checked;
+            
+            if (window.dataManager) {
+                window.dataManager.useNeon = useNeon;
+                showNotification('Settings saved', 'success');
+            }
+        }
+    </script>
+</body>
+</html>

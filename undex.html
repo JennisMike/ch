@@ -1,0 +1,1132 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title data-translate="page.title">Chinese Heritage - Discover China's Architectural Wonders</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Poppins:wght@300;400;600&family=Noto+Sans+SC:wght@400;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="translations.css" />
+    <style>
+        .tutor-link {
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+        
+        .tutor-link:hover {
+            text-decoration: none;
+        }
+        
+        /* City Explorer Modal Styles */
+        .modal-large {
+            max-width: 95vw;
+            width: 1280px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        
+        .explore-card {
+            background: #ffffff;
+            border-radius: 2.5rem;
+            box-shadow: 0 25px 45px -12px rgba(0, 0, 0, 0.35);
+            overflow: hidden;
+        }
+        
+        .card-header {
+            padding: 1.8rem 2rem 1rem 2rem;
+            background: white;
+            border-bottom: 1px solid #eff3f8;
+        }
+        
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: #eef3fc;
+            padding: 0.3rem 1rem;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #1e6f9f;
+            letter-spacing: 0.3px;
+            margin-bottom: 1rem;
+        }
+        
+        .card-header h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #1f2b3c, #2c4c6e);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 0.5rem;
+        }
+        
+        .sub {
+            color: #5a6874;
+            font-size: 1rem;
+            font-weight: 450;
+            border-left: 3px solid #3b82f6;
+            padding-left: 0.85rem;
+            margin-top: 0.25rem;
+        }
+        
+        .grid-two {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        
+        .info-panel {
+            flex: 1.2;
+            min-width: 260px;
+            background: #fbfdfe;
+            padding: 2rem 1.8rem;
+            border-right: 1px solid #e9edf2;
+        }
+        
+        .map-panel {
+            flex: 2.2;
+            min-width: 300px;
+            background: #f5f8fc;
+            padding: 2rem 1.8rem 2rem 1rem;
+        }
+        
+        .city-selector {
+            display: flex;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+            border-bottom: 1px dashed #dee4ec;
+            padding-bottom: 1.5rem;
+        }
+        
+        .city-btn {
+            background: transparent;
+            border: none;
+            font-size: 1.1rem;
+            font-weight: 600;
+            padding: 0.5rem 1.2rem;
+            border-radius: 40px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: #3a4a5c;
+            font-family: inherit;
+            background: #f0f4f9;
+        }
+        
+        .city-btn.active {
+            background: #1f6392;
+            color: white;
+            box-shadow: 0 6px 12px -8px rgba(31, 99, 146, 0.4);
+        }
+        
+        .city-btn:hover:not(.active) {
+            background: #e2e8f2;
+            color: #1f4e73;
+        }
+        
+        .locations-section h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #1e2f3c;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 1.2rem;
+        }
+        
+        .pin-list {
+            list-style: none;
+            margin-top: 0.5rem;
+        }
+        
+        .pin-list li {
+            display: flex;
+            align-items: baseline;
+            gap: 12px;
+            padding: 0.7rem 0;
+            border-bottom: 1px solid #edf2f7;
+            font-size: 1rem;
+            color: #2c3e44;
+        }
+        
+        .pin-icon {
+            font-size: 1.25rem;
+            min-width: 28px;
+            text-align: center;
+        }
+        
+        .pin-name {
+            font-weight: 500;
+            flex: 1;
+        }
+        
+        .city-note {
+            margin-top: 2rem;
+            background: #eef2fa;
+            padding: 1rem 1.2rem;
+            border-radius: 1.2rem;
+            font-size: 0.85rem;
+            color: #2c6280;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        
+        .map-wrapper {
+            background: #eef2f7;
+            border-radius: 1.5rem;
+            overflow: hidden;
+            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e9f0;
+        }
+        
+        .baidu-map-container {
+            width: 100%;
+            height: 380px;
+            background: #cad2db;
+            position: relative;
+        }
+        
+        .map-fallback-note {
+            font-size: 0.75rem;
+            text-align: center;
+            padding: 8px;
+            color: #4f6f8f;
+            background: #ffffffcc;
+            backdrop-filter: blur(4px);
+            border-top: 1px solid #e2e9f0;
+        }
+        
+        .legend-tip {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 12px;
+            margin-top: 12px;
+            font-size: 0.7rem;
+            color: #5f7f9a;
+        }
+        
+        .legend-dot {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            background: #e64539;
+            border-radius: 20px;
+            margin-right: 4px;
+            box-shadow: 0 0 0 1px white;
+        }
+        
+        .map-loading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            width: 100%;
+            background: #eef2f7;
+            color: #2c5a74;
+            font-size: 0.9rem;
+            gap: 8px;
+        }
+        
+        @media (max-width: 780px) {
+            .modal-large {
+                max-width: 95vw;
+                max-height: 95vh;
+            }
+            .grid-two {
+                flex-direction: column;
+            }
+            .info-panel {
+                border-right: none;
+                border-bottom: 1px solid #e9edf2;
+                padding: 1.5rem;
+            }
+            .map-panel {
+                padding: 1.5rem;
+            }
+            .baidu-map-container {
+                height: 320px;
+            }
+            .card-header h2 {
+                font-size: 1.6rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .city-btn {
+                font-size: 0.9rem;
+                padding: 0.4rem 1rem;
+            }
+            .pin-list li {
+                font-size: 0.9rem;
+            }
+        }
+        
+        .clickable-icon {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .clickable-icon:hover {
+            transform: scale(1.1);
+            color: #3b82f6;
+        }
+    </style>
+    <!-- AI Chat Styles -->
+    <link rel="stylesheet" href="ai-chat.css">
+  </head>
+  <body>
+
+    <nav class="navbar">
+      <div class="nav-container">
+        <a href="index.html" class="nav-logo">
+          <span class="logo-icon">🏯</span>
+          <span>Chinese-Heritage</span>
+        </a>
+
+        <div class="nav-menu" id="navMenu">
+          <a href="#home"      class="nav-link" data-translate="home">Home</a>
+          <a href="#about"     class="nav-link" data-translate="about">About</a>
+          <a href="#explore"   class="nav-link" data-translate="explore">Explore</a>
+          <a href="#marvels"   class="nav-link" data-translate="marvels">Marvels</a>
+          <a href="#treasures" class="nav-link" data-translate="treasures">Treasures</a>
+
+          <div class="language-selector">
+            <button class="language-btn">
+              <i class="fas fa-globe"></i>
+              <span data-translate="lang.current">English</span>
+              <i class="fas fa-chevron-down fa-xs"></i>
+            </button>
+            <div class="language-dropdown">
+              <a href="#" class="language-option" data-lang="en">
+                <span class="flag">🇺🇸</span>
+                <span data-translate="lang.en">English</span>
+              </a>
+              <a href="#" class="language-option" data-lang="zh">
+                <span class="flag">🇨🇳</span>
+                <span data-translate="lang.zh">中文 (Chinese)</span>
+              </a>
+              <a href="#" class="language-option" data-lang="ar">
+                <span class="flag">🇸🇦</span>
+                <span data-translate="lang.ar">العربية (Arabic)</span>
+              </a>
+            </div>
+          </div>
+
+          <div class="city-dropdown" id="cityDropdown">
+            <button class="btn btn-primary city-dropdown-toggle" id="cityToggle">
+              <span data-translate="nav.selectCity">Select City</span>
+              <i class="fas fa-chevron-down fa-xs"></i>
+            </button>
+            <div class="city-dropdown-menu" id="cityMenu">
+              <div class="city-dropdown-title" data-translate="city.chooseCity">Choose a City</div>
+              <ul class="city-dropdown-list">
+                <li><a href="beijing.html"><span data-translate="city.beijing">Beijing</span><span class="city-meta" data-translate="cities.forbiddenCity">Forbidden City</span></a></li>
+                <li><a href="xian.html"><span data-translate="city.xian">Xi'an</span><span class="city-meta" data-translate="cities.terracottaArmy">Terracotta Army</span></a></li>
+                <li><a href="hangzhou.html"><span data-translate="city.hangzhou">Hangzhou</span><span class="city-meta" data-translate="cities.westLake">West Lake</span></a></li>
+                <li><a href="suzhou.html"><span data-translate="city.suzhou">Suzhou</span><span class="city-meta" data-translate="cities.classicalGardens">Classical Gardens</span></a></li>
+                <li><a href="tianjin.html"><span data-translate="city.tianjin">Tianjin</span><span class="city-meta">Ancient Culture Street</span></a></li>
+                <li><a href="jinan.html"><span data-translate="city.jinan">Jinan</span><span class="city-meta">Baotu Spring</span></a></li>
+                <li><a href="changchun.html"><span data-translate="city.changchun">Changchun</span><span class="city-meta">Puppet Emperor's Palace</span></a></li>
+                <li><a href="luoyang.html"><span data-translate="city.luoyang">Luoyang</span><span class="city-meta">Longmen Grottoes</span></a></li>
+                <li><a href="chengdu.html"><span data-translate="city.chengdu">Chengdu</span><span class="city-meta">Dujiangyan</span></a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="nav-actions">
+          <div class="hamburger" id="hamburger">
+            <span></span><span></span><span></span>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero" id="home">
+      <div class="hero-container">
+        <div class="hero-content">
+          <p class="hero-sub animate-fade-in" data-translate="subtitle">Experience Beauty of Chinese Architecture</p>
+          <h1 class="hero-title animate-slide-up">
+            <span data-translate="title">Discover Timeless Elegance</span><br />
+            <span class="title-highlight" data-translate="titleHighlight">of China's Historic Buildings</span>
+          </h1>
+          <p class="hero-subtitle animate-fade-in-delay" data-translate="description">
+            Explore Rich Cultural Heritage of China's Architectural Wonders — from towering pagodas to serene imperial temples.
+          </p>
+          <div class="hero-actions">
+            <div class="auth-buttons">
+              <button class="btn btn-primary btn-large" onclick="window.location.href='signup.html'">
+                <i class="fas fa-user-plus"></i>
+                <span data-translate="signup">Sign Up Now</span>
+              </button>
+              <button class="btn btn-outline btn-large" onclick="window.location.href='login.html'">
+                <i class="fas fa-sign-in-alt"></i>
+                <span data-translate="login">Login</span>
+              </button>
+            </div>
+            <button class="btn btn-outline btn-large" id="gameBtn">
+              <i class="fas fa-gamepad"></i>
+              <span data-translate="playGame">Play Game</span>
+            </button>
+          </div>
+          <div class="hero-stats">
+            <div class="stat">
+              <span class="stat-number">9</span>
+              <span class="stat-label" data-translate="stats.cities">Historic Cities</span>
+            </div>
+            <div class="stat">
+              <span class="stat-number">5,000+</span>
+              <span class="stat-label" data-translate="stats.years">Years of History</span>
+            </div>
+            <div class="stat">
+              <span class="stat-number">50+</span>
+              <span class="stat-label" data-translate="stats.landmarks">Iconic Landmarks</span>
+            </div>
+          </div>
+        </div>
+        <div class="hero-image">
+          <div class="video-preview">
+            <video src="videos/archi-undex.mp4" autoplay muted loop playsinline width="600" height="400">
+              Your browser does not support the video tag.
+            </video>
+            <div class="play-button"><i class="fas fa-play"></i></div>
+          </div>
+        </div>
+      </div>
+      <div class="scroll-indicator animate-bounce"><i class="fas fa-chevron-down"></i></div>
+      <div class="decorative-element decorative-1"></div>
+      <div class="decorative-element decorative-2"></div>
+      <div class="decorative-element decorative-3"></div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" class="how-it-works">
+      <div class="container">
+        <h2 class="section-title" data-translate="about.title">Immerse Yourself</h2>
+        <p class="section-subtitle" data-translate="about.subtitle">China's architectural landscape is a tapestry of ancient wisdom and modern innovation</p>
+        <div class="steps">
+          <div class="step">
+            <div class="step-icon"><i class="fas fa-search"></i></div>
+            <h3 data-translate="about.discover">Discover the Artistry</h3>
+            <p data-translate="about.discoverDesc">Chinese architecture blends harmonious aesthetics with practical functionality — a testament to the country's rich cultural heritage spanning thousands of years.</p>
+          </div>
+          <div class="step">
+            <div class="step-icon clickable-icon" onclick="openCityMapPage()"><i class="fas fa-map-marked-alt"></i></div>
+            <h3 data-translate="about.explore">Explore the Cities</h3>
+            <p data-translate="about.exploreDesc">From the Forbidden City in Beijing to the Terracotta Army in Xi'an, journey through China's most iconic historical destinations.</p>
+          </div>
+          <div class="step">
+            <div class="step-icon"><i class="fas fa-landmark"></i></div>
+            <h3 data-translate="about.uncover">Uncover the Secrets</h3>
+            <p data-translate="about.uncoverDesc">Delve into the design principles and techniques passed down through generations, uncovering the fascinating histories behind each marvel.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+   
+
+    <!-- FEATURED CITIES -->
+    <section id="explore" class="tutors">
+      <div class="container">
+        <h2 class="section-title" data-translate="cities.title">Featured Cities</h2>
+        <p class="section-subtitle" data-translate="cities.subtitle">Explore China's most breathtaking historic destinations</p>
+        <div class="tutor-grid">
+
+          <div class="tutor-card">
+            <a href="beijing.html" class="tutor-link">
+              <img src="images/beijing-frtsection.jpeg" alt="Beijing" class="tutor-avatar" />
+              <div class="tutor-info">
+                <h3 data-translate="city.beijing">Beijing</h3>
+                <p class="tutor-language" data-translate="cities.forbiddenCity">Forbidden City</p>
+                <div class="tutor-rating">
+                  <i class="fas fa-star"></i>
+                  <span>5.0</span>
+                  <span class="review-count">(<span data-translate="cities.imperialCapital">Imperial Capital</span>)</span>
+                </div>
+                <p class="tutor-bio" data-translate="cities.beijing.bio">The heart of dynastic China — home to the world's largest palace complex and over 600 years of imperial history.</p>
+                <button class="btn btn-primary btn-small" data-translate="cities.exploreCity">Explore City</button>
+              </div>
+            </a>
+          </div>
+
+          <div class="tutor-card">
+            <a href="xian.html" class="tutor-link">
+              <img src="images/Xi-an.jpg" alt="Xi'an" class="tutor-avatar" />
+              <div class="tutor-info">
+                <h3 data-translate="city.xian">Xi'an</h3>
+                <p class="tutor-language" data-translate="cities.ancientCapital">Ancient Capital</p>
+                <div class="tutor-rating">
+                  <i class="fas fa-star"></i>
+                  <span>4.9</span>
+                  <span class="review-count">(<span data-translate="cities.ancientCapital">Ancient Capital</span>)</span>
+                </div>
+                <p class="tutor-bio" data-translate="cities.xian.bio">The heart of dynastic China — home to the legendary Terracotta Army, where thousands of life-sized warriors guard Emperor Qin's eternal rest.</p>
+                <button class="btn btn-primary btn-small" data-translate="cities.exploreCity">Explore City</button>
+              </div>
+            </a>
+          </div>
+
+          <div class="tutor-card">
+            <a href="suzhou.html" class="tutor-link">
+              <img src="images/suzhou1.jpeg" alt="suzhou" class="tutor-avatar" />
+              <div class="tutor-info">
+                <h3 data-translate="city.suzhou">Suzhou</h3>
+                <p class="tutor-language" data-translate="cities.historicWaterTown">Historic Water Town</p>
+                <div class="tutor-rating">
+                  <i class="fas fa-star"></i>
+                  <span>4.7</span>
+                  <span class="review-count">(<span data-translate="cities.historicWaterTown">Historic Water Town</span>)</span>
+                </div>
+                <p class="tutor-bio" data-translate="cities.suzhou.bio">Suzhou is famous for its classical gardens, elegant bridges, and artistic windows. Known as the "Venice of the East," it blends water, architecture, and nature into peaceful, living landscapes.</p>
+                <button class="btn btn-primary btn-small" data-translate="cities.exploreCity">Explore City</button>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MARVELS -->
+    <section id="marvels" class="pricing">
+      <div class="container">
+        <h2 class="section-title" data-translate="marvels.title">Architectural Marvels</h2>
+        <p class="section-subtitle" data-translate="marvels.subtitle">Design styles that shaped China's iconic structures</p>
+        <div class="pricing-grid">
+
+          <div class="pricing-card">
+            <h3 data-translate="marvels.imperial">Imperial Architecture</h3>
+            <div class="marvel-icon"><i class="fas fa-chess-rook"></i></div>
+            <ul class="features">
+              <li><i class="fas fa-check"></i> <span data-translate="marvels.yellowTiles">Imperial yellow glazed roof tiles</span></li>
+              <li><i class="fas fa-check"></i> <span data-translate="marvels.symmetrical">Perfect symmetrical layout</span></li>
+              <li><i class="fas fa-check"></i> <span data-translate="marvels.dragonMotifs">Dragon motifs and gold decoration</span></li>
+            </ul>
+            <a href="beijing.html" class="btn btn-outline" data-translate="marvels.explore">Explore</a>
+          </div>
+
+          <div class="pricing-card featured">
+            <div class="badge" data-translate="marvels.mostIconic">Most Iconic</div>
+            <h3 data-translate="marvels.mostIconic">Military Architecture</h3>
+            <div class="marvel-icon"><i class="fas fa-place-of-worship"></i></div>
+            <ul class="features">
+              <li><i class="fas fa-check"></i> <span data-translate="marvels.rammedEarth">Rammed earth and brick construction</span></li>
+              <li><i class="fas fa-check"></i> <span data-translate="marvels.watchtowers">Watchtowers every 120 metres</span></li>
+              <li><i class="fas fa-check"></i> <span data-translate="marvels.barbican">Barbican gate defence system</span></li>
+              <li><i class="fas fa-check"></i> <span data-translate="marvels.riceMortar">Glutinous rice mortar — 650 years strong</span></li>
+              <li><i class="fas fa-check"></i> <span data-translate="marvels.completeWall">Most complete wall in the world</span></li>
+            </ul>
+            <a href="#explore" class="btn btn-primary" data-translate="marvels.discover">Discover</a>
+          </div>
+
+          <div class="pricing-card">
+            <h3 data-translate="marvels.garden">Classical Gardens</h3>
+            <div class="marvel-icon"><i class="fas fa-leaf"></i></div>
+            <ul class="features">
+              <li><i class="fas fa-check"></i> <span data-translate="marvels.scholarsRock">Scholar's rocks and lotus ponds</span></li>
+              <li><i class="fas fa-check"></i> <span data-translate="marvels.pavilions">Moon gates and zigzag bridges</span></li>
+              <li><i class="fas fa-check"></i> <span data-translate="marvels.harmony">Nature and architecture as one</span></li>
+              <li><i class="fas fa-check"></i> <span data-translate="marvels.borrowedScenery">The art of borrowed scenery 借景</span></li>
+            </ul>
+            <a href="suzhou.html" class="btn btn-outline" data-translate="marvels.explore">Explore</a>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- VISITOR STORIES -->
+    <section id="testimonials" class="testimonials">
+      <div class="container">
+        <h2 class="section-title" data-translate="testimonials.title">Visitor Stories</h2>
+        <div class="testimonial-grid">
+
+          <div class="testimonial-card">
+            <div class="testimonial-content">
+              <p data-translate="testimonials.story1">"Walking through the Forbidden City felt like stepping back 600 years in time. The sheer scale and detail of the architecture left me speechless."</p>
+            </div>
+            <div class="testimonial-author">
+              <img src="https://via.placeholder.com/50x50/8B0000/D4AF37?text=JD" alt="James Davidson" class="author-avatar" />
+              <div class="author-info">
+                <h4 data-translate="testimonials.name1">James Davidson</h4>
+                <p data-translate="testimonials.visitedBeijing">Visited Beijing</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="testimonial-card">
+            <div class="testimonial-content">
+              <p data-translate="testimonials.story2">"The Terracotta Army in Xi'an is unlike anything I've ever seen. Each warrior has a unique face — it's a miracle of ancient craftsmanship."</p>
+            </div>
+            <div class="testimonial-author">
+              <img src="https://via.placeholder.com/50x50/8B0000/D4AF37?text=MK" alt="Maria Kovács" class="author-avatar" />
+              <div class="author-info">
+                <h4 data-translate="testimonials.name2">Maria Kovács</h4>
+                <p data-translate="testimonials.visitedXian">Visited Xi'an</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="testimonial-card">
+            <div class="testimonial-content">
+              <p data-translate="testimonials.story3">"Suzhou's classical gardens are pure serenity. Every pavilion, every rock, every pond is placed with centuries of artistic intention."</p>
+            </div>
+            <div class="testimonial-author">
+              <img src="https://via.placeholder.com/50x50/8B0000/D4AF37?text=AL" alt="Anna Laurent" class="author-avatar" />
+              <div class="author-info">
+                <h4 data-translate="testimonials.name3">Anna Laurent</h4>
+                <p data-translate="testimonials.visitedSuzhou">Visited Suzhou</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta" id="treasures">
+      <div class="container">
+        <div class="cta-content">
+          <p class="cta-tagline" data-translate="cta.tagline">Uncover the Secrets</p>
+          <h2 data-translate="cta.title">Timeless Treasures Await</h2>
+          <p data-translate="cta.description">Immerse yourself in the captivating world of Chinese architecture, where each building tells a story of the past and a vision for the future.</p>
+          <button class="btn btn-primary btn-large" data-translate="cta.beginJourney">Begin Your Journey</button>
+          <p class="cta-note" data-translate="cta.freeAccess">Free access · No registration required</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer" id="contact">
+      <div class="container">
+        <div class="footer-content">
+
+          <div class="footer-section">
+            <div class="footer-logo"><span>🏯</span><span>Chinese-Heritage</span></div>
+            <p data-translate="footer.desc">A curated journey through China's architectural heritage — explore iconic structures, meanings, and stories across centuries.</p>
+            <div class="social-links">
+              <a href="#"><i class="fab fa-instagram"></i></a>
+              <a href="#"><i class="fab fa-x-twitter"></i></a>
+              <a href="#"><i class="fab fa-youtube"></i></a>
+              <a href="#"><i class="fab fa-linkedin"></i></a>
+            </div>
+          </div>
+
+          <div class="footer-section">
+            <h4 data-translate="footer.quickLinks">Quick Links</h4>
+            <ul>
+              <li><a href="#home"      data-translate="nav.home">Home</a></li>
+              <li><a href="#about"     data-translate="nav.about">About</a></li>
+              <li><a href="#explore"   data-translate="nav.explore">Explore</a></li>
+              <li><a href="#marvels"   data-translate="nav.marvels">Marvels</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-section">
+            <h4 data-translate="footer.exploreCities">Explore Cities</h4>
+            <ul>
+              <li><a href="beijing.html"><span data-translate="city.beijing">Beijing</span> — <span data-translate="cities.forbiddenCity">Forbidden City</span></a></li>
+              <li><a href="xian.html"><span data-translate="city.xian">Xi'an</span> — <span data-translate="cities.terracottaArmy">Terracotta Army</span></a></li>
+              <li><a href="hangzhou.html"><span data-translate="city.hangzhou">Hangzhou</span> — <span data-translate="cities.westLake">West Lake</span></a></li>
+              <li><a href="suzhou.html"><span data-translate="city.suzhou">Suzhou</span> — <span data-translate="cities.classicalGardens">Classical Gardens</span></a></li>
+              <li><a href="luoyang.html"><span data-translate="city.luoyang">Luoyang</span> — Longmen Grottoes</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-section">
+            <h4 data-translate="footer.contact">Contact</h4>
+            <ul>
+              <li><a href="mailto:hello@chinese-heritage.com">hello@chinese-heritage.com</a></li>
+              <li><a href="#" data-translate="footer.privacy">Privacy Policy</a></li>
+              <li><a href="#" data-translate="footer.terms">Terms of Service</a></li>
+              <li><a href="#" data-translate="nav.about">About Us</a></li>
+            </ul>
+          </div>
+
+        </div>
+        <div class="footer-bottom">
+          <p data-translate="footer.rights">© 2026 Chinese-Heritage. All rights reserved.</p>
+          <div class="footer-links">
+            <a href="#" data-translate="footer.privacy">Privacy</a>
+            <a href="#" data-translate="footer.terms">Terms</a>
+            <a href="#" data-translate="footer.cookies">Cookies</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Baidu Maps API -->
+    <script type="text/javascript" src="https://api.map.baidu.com/api?v=3.0&ak=YDuBHELc7GRyXzE8e2c0M09yUyBgkiux"></script>
+
+    <!-- Alternative: OpenStreetMap as fallback -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <!-- translations MUST load first -->
+    <script src="translations-final.js"></script>
+    <script src="user-manager.js"></script>
+    <script src="script.js"></script>
+    
+    <script>
+      // Initialize translation system immediately
+      document.addEventListener('DOMContentLoaded', function() {
+        console.log('DOM loaded, checking translation manager...');
+        
+        // Wait a bit for scripts to load
+        setTimeout(function() {
+          if (window.translationManager) {
+            console.log('Translation manager found:', window.translationManager);
+            console.log('Current language:', window.translationManager.getCurrentLanguage());
+            
+            // Test translations
+            console.log('Testing home:', window.translationManager.t('home'));
+            console.log('Testing title:', window.translationManager.t('title'));
+            
+            // Initialize language on page
+            window.translationManager.initializeLanguage();
+            console.log('Translation system initialized successfully!');
+          } else {
+            console.error('Translation manager not found!');
+          }
+        }, 100);
+      });
+      
+      // Also try on window load as backup
+      window.addEventListener('load', function() {
+        console.log('Window loaded, checking translation manager...');
+        
+        if (window.translationManager) {
+          console.log('Translation manager found on window load');
+          window.translationManager.initializeLanguage();
+        } else {
+          console.error('Translation manager still not found on window load!');
+        }
+      });
+      
+      // User management (if available)
+      window.addEventListener('load', function() {
+        if (window.userManager) {
+          const currentUser = window.userManager.getCurrentUser();
+          if (currentUser) {
+            console.log('User logged in:', currentUser);
+            // Update UI for logged in user
+            const authButtons = document.querySelector('.auth-buttons');
+            if (authButtons) {
+              authButtons.innerHTML = `
+                <button class="btn btn-primary btn-large" onclick="showUserProfile()">
+                  <i class="fas fa-user"></i> ${currentUser.fullName}
+                </button>
+                <button class="btn btn-outline btn-large" onclick="logout()">
+                  <i class="fas fa-sign-out-alt"></i> 
+                  <span data-translate="logout">Logout</span>
+                </button>
+              `;
+            }
+          }
+        }
+        
+        // Initialize city explorer
+        initCityExplorer();
+      });
+      
+      function showUserProfile() {
+        const currentUser = window.userManager.getCurrentUser();
+        if (currentUser) {
+          if (window.translationManager) {
+            const t = window.translationManager.t.bind(window.translationManager);
+            alert(`${t('alerts.userProfile')}\n\n${t('alerts.name')}: ${currentUser.fullName}\n${t('alerts.email')}: ${currentUser.email}\n${t('alerts.memberSince')}: ${new Date(currentUser.createdAt).toLocaleDateString()}\n${t('alerts.loginCount')}: ${currentUser.loginCount || 0}\n${t('alerts.lastLogin')}: ${currentUser.lastLogin ? new Date(currentUser.lastLogin).toLocaleString() : t('alerts.never')}\n\n${t('alerts.enjoyMessage')}`);
+          } else {
+            alert(` User Profile\n\nName: ${currentUser.fullName}\nEmail: ${currentUser.email}\nMember Since: ${new Date(currentUser.createdAt).toLocaleDateString()}\nLogin Count: ${currentUser.loginCount || 0}\nLast Login: ${currentUser.lastLogin ? new Date(currentUser.lastLogin).toLocaleString() : 'Never'}\n\nEnjoy exploring Chinese Heritage!`);
+          }
+        }
+      }
+      
+      function logout() {
+        const result = window.userManager.logout();
+        if (result.success) {
+          if (window.translationManager) {
+            alert(window.translationManager.t('alerts.logoutSuccess'));
+          } else {
+            alert(result.message);
+          }
+          location.reload();
+        }
+      }
+      
+      // City Explorer Functions
+      function openCityMapPage() {
+        // Open the city map in a new tab/window
+        window.open('city-map.html', '_blank');
+      }
+      
+      // City data for the explorer
+      const cityData = {
+        beijing: {
+          name: "北京 Beijing",
+          center: { lng: 116.4074, lat: 39.9042 },
+          zoom: 12,
+          pins: [
+            { name: "Forbidden City (紫禁城)", lng: 116.397, lat: 39.918, desc: "UNESCO World Heritage" },
+            { name: "Temple of Heaven (天坛)", lng: 116.410, lat: 39.882, desc: "Imperial sacrifice altar" },
+            { name: "Summer Palace (颐和园)", lng: 116.273, lat: 39.998, desc: "Royal garden masterpiece" }
+          ]
+        },
+        xian: {
+          name: "西安 Xi'an",
+          center: { lng: 108.9402, lat: 34.3416 },
+          zoom: 13,
+          pins: [
+            { name: "City Wall (西安城墙)", lng: 108.948, lat: 34.261, desc: "Ancient fortifications" },
+            { name: "Big Wild Goose Pagoda (大雁塔)", lng: 108.961, lat: 34.219, desc: "Buddhist pagoda" },
+            { name: "Great Mosque (化觉巷清真寺)", lng: 108.936, lat: 34.263, desc: "Historic mosque" },
+            { name: "Bell Tower (钟楼)", lng: 108.940, lat: 34.261, desc: "City center landmark" }
+          ]
+        },
+        suzhou: {
+          name: "苏州 Suzhou",
+          center: { lng: 120.6196, lat: 31.2994 },
+          zoom: 13,
+          pins: [
+            { name: "Humble Administrator's Garden (拙政园)", lng: 120.629, lat: 31.326, desc: "Classical garden" },
+            { name: "Lion Grove Garden (狮子林)", lng: 120.631, lat: 31.323, desc: "Rockery labyrinth" },
+            { name: "Lingering Garden (留园)", lng: 120.597, lat: 31.317, desc: "UNESCO garden" }
+          ]
+        }
+      };
+
+      let map = null;
+      let currentMarkers = [];
+      let currentCityKey = "beijing";
+
+      function initCityExplorer() {
+        // Add event listeners to city buttons
+        const cityBtns = document.querySelectorAll('.city-btn');
+        cityBtns.forEach(btn => {
+          btn.addEventListener('click', function() {
+            const cityKey = this.getAttribute('data-city');
+            if (cityKey) {
+              switchCity(cityKey);
+            }
+          });
+        });
+        
+        // Close modal when clicking outside
+        window.addEventListener('click', function(event) {
+          const modal = document.getElementById('cityExplorerModal');
+          if (event.target === modal) {
+            closeCityExplorer();
+          }
+        });
+      }
+
+      function clearMarkers() {
+        if (currentMarkers && currentMarkers.length) {
+          for (let i = 0; i <currentMarkers.length; i++) {
+            if (currentMarkers[i]) {
+              currentMarkers[i].remove();
+            }
+          }
+          currentMarkers = [];
+        }
+      }
+
+      function addMarkersForCity(cityKey) {
+        const data = cityData[cityKey];
+        if (!data || !map) return;
+
+        // Check if using Baidu Maps or Leaflet
+        if (typeof BMap !== 'undefined' && map instanceof BMap.Map) {
+          // Baidu Maps implementation
+          const points = data.pins;
+          const markersToAdd = [];
+
+          for (let i = 0; i < points.length; i++) {
+            const pin = points[i];
+            const point = new BMap.Point(pin.lng, pin.lat);
+            
+            const marker = new BMap.Marker(point, {
+              title: pin.name,
+              enableDragging: false,
+              raiseOnDrag: false
+            });
+            
+            const infoWindowContent = `
+              <div style="font-family: 'Segoe UI', system-ui; padding: 6px 4px; max-width: 220px;">
+                <strong style="font-size: 1rem; color: #1e4663;"> ${pin.name}</strong><br/>
+                <span style="font-size: 0.8rem; color: #4a627a;">${pin.desc}</span><br/>
+                <small style="color: #2c7cb6;"> 推荐探索</small>
+              </div>
+            `;
+            const infoWindow = new BMap.InfoWindow(infoWindowContent, {
+              width: 210,
+              height: 70,
+              title: pin.name
+            });
+            
+            marker.addEventListener("click", function() {
+              map.openInfoWindow(infoWindow, point);
+            });
+            
+            map.addOverlay(marker);
+            markersToAdd.push(marker);
+          }
+          
+          currentMarkers = markersToAdd;
+          
+          if (points.length > 0) {
+            const bounds = new BMap.Bounds();
+            points.forEach(p => {
+              bounds.extend(new BMap.Point(p.lng, p.lat));
+            });
+            bounds.extend(new BMap.Point(data.center.lng, data.center.lat));
+            map.setViewport(bounds, { zoomFactor: 0.2, delay: 100 });
+          } else {
+            map.centerAndZoom(new BMap.Point(data.center.lng, data.center.lat), data.zoom);
+          }
+        } else {
+          // Leaflet/OpenStreetMap implementation
+          // Clear existing markers
+          currentMarkers.forEach(marker => {
+            map.removeLayer(marker);
+          });
+          currentMarkers = [];
+          
+          // Add new markers
+          data.pins.forEach(pin => {
+            const marker = L.marker([pin.lat, pin.lng]).addTo(map);
+            marker.bindPopup(`<strong>${pin.name}</strong><br>${pin.desc}`);
+            currentMarkers.push(marker);
+          });
+          
+          // Fit map to markers
+          if (data.pins.length > 0) {
+            const bounds = L.latLngBounds(data.pins.map(p => [p.lat, p.lng]));
+            map.fitBounds(bounds, { padding: [50, 50] });
+          } else {
+            map.setView([data.center.lat, data.center.lng], data.zoom);
+          }
+        }
+      }
+      
+      function switchCity(cityKey) {
+        currentCityKey = cityKey;
+        const data = cityData[cityKey];
+        if (!data) return;
+        
+        // Update active button style
+        document.querySelectorAll('.city-btn').forEach(btn => {
+          if (btn.getAttribute('data-city') === cityKey) {
+            btn.classList.add('active');
+          } else {
+            btn.classList.remove('active');
+          }
+        });
+        
+        // Update pin list
+        const pinListEl = document.getElementById('pinList');
+        if (pinListEl) {
+          pinListEl.innerHTML = '';
+          data.pins.forEach(pin => {
+            const li = document.createElement('li');
+            li.innerHTML = `
+              <div class="pin-icon"></div>
+              <div class="pin-name">${pin.name}</div>
+              <div style="font-size:0.7rem; color:#6f8eae;"></div>
+            `;
+            pinListEl.appendChild(li);
+          });
+        }
+        
+        // Update map
+        if (map) {
+          clearMarkers();
+          map.centerAndZoom(new BMap.Point(data.center.lng, data.center.lat), data.zoom);
+          addMarkersForCity(cityKey);
+        }
+      }
+      
+      function initBaiduMap() {
+        const container = document.getElementById('baiduMapContainer');
+        if (!container) return;
+        
+        // Clear loading text
+        const loadingMsg = document.getElementById('mapLoadingMsg');
+        if (loadingMsg) loadingMsg.style.display = 'none';
+        
+        // Check if Baidu Maps is available immediately
+        if (typeof BMap !== 'undefined' && BMap.Map) {
+          try {
+            console.log('Initializing Baidu Maps...');
+            // Initialize Baidu Map
+            const beijingPoint = new BMap.Point(116.4074, 39.9042);
+            map = new BMap.Map(container);
+            map.centerAndZoom(beijingPoint, 12);
+            
+            // Enable controls
+            map.enableScrollWheelZoom(true);
+            map.addControl(new BMap.NavigationControl({ anchor: BMAP_ANCHOR_TOP_RIGHT, type: BMAP_NAVIGATION_CONTROL_SMALL }));
+            map.addControl(new BMap.ScaleControl({ anchor: BMAP_ANCHOR_BOTTOM_LEFT }));
+            map.addControl(new BMap.MapTypeControl({ anchor: BMAP_ANCHOR_TOP_LEFT }));
+            
+            // Add initial markers for Beijing
+            addMarkersForCity('beijing');
+            
+            // Update pin list for Beijing
+            updatePinList('beijing');
+            
+            console.log('Baidu Map initialized successfully!');
+            return; // Success, exit function
+            
+          } catch (error) {
+            console.error('Error initializing Baidu Map:', error);
+          }
+        }
+        
+        // If Baidu Maps is not available, immediately use fallback
+        console.log('Baidu Maps not available, using OpenStreetMap fallback...');
+        initFallbackMap();
+      }
+      
+      function initFallbackMap() {
+        const container = document.getElementById('baiduMapContainer');
+        if (!container) return;
+        
+        try {
+          // Clear container
+          container.innerHTML = '';
+          
+          // Initialize OpenStreetMap with Leaflet
+          map = L.map(container).setView([39.9042, 116.4074], 12);
+          
+          // Add OpenStreetMap tiles
+          L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: ' OpenStreetMap contributors'
+          }).addTo(map);
+          
+          // Add markers for Beijing
+          const beijingData = cityData.beijing;
+          beijingData.pins.forEach(pin => {
+            const marker = L.marker([pin.lat, pin.lng]).addTo(map);
+            marker.bindPopup(`<strong>${pin.name}</strong><br>${pin.desc}`);
+          });
+          
+          // Update pin list
+          updatePinList('beijing');
+          
+          console.log('OpenStreetMap fallback initialized successfully!');
+          
+        } catch (error) {
+          console.error('Error initializing fallback map:', error);
+          // Show error message
+          container.innerHTML = `
+            <div style="display:flex; flex-direction:column; align-items:center; justify-content:center; height:100%; background:#f0f4fa; color:#666; border-radius:1rem; font-size:0.9rem; padding:2rem; text-align:center;">
+              <div style="font-size:3rem; margin-bottom:1rem;">🗺️</div>
+              <div style="font-weight:bold; margin-bottom:0.5rem;" data-translate="mapLoadingFailed">Interactive Map</div>
+              <div style="margin-bottom:1rem;" data-translate="mapFailedDesc">Map loading failed</div>
+              <div style="font-size:0.8rem; color:#999;" data-translate="mapFailedNote">Please explore the city landmarks below</div>
+              <button onclick="initBaiduMap()" style="margin-top:1rem; padding:0.5rem 1rem; background:#3b82f6; color:white; border:none; border-radius:0.5rem; cursor:pointer;">
+                <span data-translate="retryMap">Retry Loading Map</span>
+              </button>
+            </div>
+          `;
+          
+          // Apply translations to the error message
+          if (window.translationManager) {
+            setTimeout(() => {
+              window.translationManager.updatePageLanguage();
+            }, 100);
+          }
+        }
+      }
+      
+      function updatePinList(cityKey) {
+        const pinListEl = document.getElementById('pinList');
+        if (pinListEl) {
+          pinListEl.innerHTML = '';
+          const data = cityData[cityKey];
+          data.pins.forEach(pin => {
+            const li = document.createElement('li');
+            li.innerHTML = `<div class="pin-icon">📌</div><div class="pin-name">${pin.name}</div>`;
+            pinListEl.appendChild(li);
+          });
+        }
+      }
+      
+      // Watch for Baidu API script load status
+      window.addEventListener('load', function() {
+        if (typeof BMap !== 'undefined') {
+          // Map will be initialized when modal opens
+        } else {
+          // Wait for script to fully load
+          const checkInterval = setInterval(() => {
+            if (typeof BMap !== 'undefined') {
+              clearInterval(checkInterval);
+            }
+          }, 200);
+          
+          // Safety timeout
+          setTimeout(() => {
+            if (typeof BMap === 'undefined') {
+              clearInterval(checkInterval);
+              const container = document.getElementById('baiduMapContainer');
+              if (container) {
+                container.innerHTML = '<div style="display:flex; align-items:center; justify-content:center; height:100%; background:#f0f4fa; color:#a00; border-radius:1rem; font-size:0.9rem; padding:1rem;"> Baidu Maps API could not load. Check internet or API key.<br> But you can still explore the city pins below.</div>';
+              }
+              console.error("Baidu Maps failed to load");
+            }
+          }, 5000);
+        }
+      });
+      
+      // Add custom styles for Baidu Maps
+      const style = document.createElement('style');
+      style.textContent = `
+        .BMap_cpyCtrl, .anchorBL { display: none !important; }
+        .baidu-map-container .BMap_centerMarker { background: transparent; }
+        .baidu-map-container img[src*="copyright"] { display: none; }
+        .baidu-map-container { border-radius: 1rem; }
+      `;
+      document.head.appendChild(style);
+      
+      // Simple test function
+      function testTranslation() {
+        if (window.translationManager) {
+          console.log('Translation test:');
+          console.log('- Current language:', window.translationManager.getCurrentLanguage());
+          console.log('- Home (en):', window.translationManager.t('home'));
+          
+          // Test changing language
+          console.log('Changing to Chinese...');
+          window.translationManager.changeLanguage('zh');
+          console.log('- Home after change:', window.translationManager.t('home'));
+          
+          console.log('Changing to Arabic...');
+          window.translationManager.changeLanguage('ar');
+          console.log('- Home after change:', window.translationManager.t('home'));
+          
+          console.log('Changing back to English...');
+          window.translationManager.changeLanguage('en');
+          console.log('- Home after change:', window.translationManager.t('home'));
+        } else {
+          console.error('Translation manager not available for testing!');
+        }
+      }
+      
+      // Auto-run test after 2 seconds
+      setTimeout(testTranslation, 2000);
+    </script>
+
+    <!-- AI Chat Script -->
+    <script src="ai-chat.js"></script>
+
+  </body>
+</html>

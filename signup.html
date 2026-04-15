@@ -1,0 +1,356 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign Up - Chinese Heritage</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="style.css" />
+    <style>
+      .auth-container {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(-45deg, #8B0000, #1a0000, #3d0000, #000000);
+        background-size: 400% 400%;
+        animation: gradient 15s ease infinite;
+        padding: 40px 20px;
+      }
+      
+      .auth-card {
+        background: rgba(10, 0, 0, 0.95);
+        border-radius: 24px;
+        padding: 48px;
+        max-width: 500px;
+        width: 100%;
+        border: 1px solid rgba(212, 175, 55, 0.25);
+        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(12px);
+      }
+      
+      .auth-header {
+        text-align: center;
+        margin-bottom: 40px;
+      }
+      
+      .auth-logo {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        font-family: "Cinzel", serif;
+        font-size: 24px;
+        font-weight: 700;
+        color: #D4AF37;
+        margin-bottom: 16px;
+      }
+      
+      .auth-title {
+        font-family: "Cinzel", serif;
+        font-size: 32px;
+        font-weight: 700;
+        color: white;
+        margin-bottom: 8px;
+      }
+      
+      .auth-subtitle {
+        color: rgba(255, 255, 255, 0.7);
+        font-family: "Playfair Display", serif;
+        font-size: 16px;
+      }
+      
+      .form-group {
+        margin-bottom: 24px;
+      }
+      
+      .form-label {
+        display: block;
+        margin-bottom: 8px;
+        color: #D4AF37;
+        font-weight: 500;
+        font-family: "Poppins", sans-serif;
+      }
+      
+      .form-input {
+        width: 100%;
+        padding: 12px 16px;
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(212, 175, 55, 0.3);
+        border-radius: 12px;
+        color: white;
+        font-family: "Poppins", sans-serif;
+        font-size: 16px;
+        transition: all 0.3s ease;
+      }
+      
+      .form-input:focus {
+        outline: none;
+        border-color: #D4AF37;
+        background: rgba(255, 255, 255, 0.12);
+      }
+      
+      .form-input::placeholder {
+        color: rgba(255, 255, 255, 0.4);
+      }
+      
+      .auth-divider {
+        display: flex;
+        align-items: center;
+        margin: 32px 0;
+        gap: 16px;
+      }
+      
+      .auth-divider::before,
+      .auth-divider::after {
+        content: "";
+        flex: 1;
+        height: 1px;
+        background: rgba(212, 175, 55, 0.2);
+      }
+      
+      .auth-divider span {
+        color: rgba(255, 255, 255, 0.5);
+        font-size: 14px;
+      }
+      
+      .social-buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+      
+      .social-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        padding: 12px 20px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.05);
+        color: white;
+        text-decoration: none;
+        font-family: "Poppins", sans-serif;
+        font-weight: 500;
+        transition: all 0.3s ease;
+        cursor: pointer;
+      }
+      
+      .social-btn:hover {
+        background: rgba(255, 255, 255, 0.1);
+        transform: translateY(-2px);
+      }
+      
+      .social-btn.google:hover {
+        border-color: #4285f4;
+        background: rgba(66, 133, 244, 0.1);
+      }
+      
+      .social-btn.wechat:hover {
+        border-color: #07c160;
+        background: rgba(7, 193, 96, 0.1);
+      }
+      
+      .auth-footer {
+        text-align: center;
+        margin-top: 32px;
+        padding-top: 24px;
+        border-top: 1px solid rgba(212, 175, 55, 0.2);
+      }
+      
+      .auth-footer p {
+        color: rgba(255, 255, 255, 0.7);
+        font-family: "Poppins", sans-serif;
+      }
+      
+      .auth-footer a {
+        color: #D4AF37;
+        text-decoration: none;
+        font-weight: 500;
+      }
+      
+      .auth-footer a:hover {
+        color: #FFD700;
+      }
+      
+      .btn-primary {
+        width: 100%;
+        padding: 14px 24px;
+        background: linear-gradient(135deg, #BB1E1E, #8B0000);
+        color: #FFD700;
+        border: none;
+        border-radius: 12px;
+        font-family: "Poppins", sans-serif;
+        font-weight: 600;
+        font-size: 16px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(187, 30, 30, 0.3);
+      }
+      
+      .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(187, 30, 30, 0.5);
+        background: linear-gradient(135deg, #d42020, #a00000);
+      }
+      
+      .back-to-home {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: #D4AF37;
+        text-decoration: none;
+        font-family: "Poppins", sans-serif;
+        font-weight: 500;
+        transition: all 0.3s ease;
+      }
+      
+      .back-to-home:hover {
+        color: #FFD700;
+        transform: translateX(-4px);
+      }
+      
+      @keyframes gradient {
+        0%   { background-position: 0% 50%; }
+        50%  { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="auth-container">
+      <a href="undex.html" class="back-to-home">
+        <i class="fas fa-arrow-left"></i>
+        Back to Home
+      </a>
+      
+      <div class="auth-card">
+        <div class="auth-header">
+          <div class="auth-logo">
+            <span>🏯</span>
+            <span>Chinese-Heritage</span>
+          </div>
+          <h1 class="auth-title">Create Account</h1>
+          <p class="auth-subtitle">Join us to explore China's architectural wonders</p>
+        </div>
+        
+        <form id="signupForm">
+          <div class="form-group">
+            <label class="form-label" for="fullName">Full Name</label>
+            <input type="text" id="fullName" class="form-input" placeholder="Enter your full name" required>
+          </div>
+          
+          <div class="form-group">
+            <label class="form-label" for="email">Email Address</label>
+            <input type="email" id="email" class="form-input" placeholder="Enter your email" required>
+          </div>
+          
+          <div class="form-group">
+            <label class="form-label" for="password">Password</label>
+            <input type="password" id="password" class="form-input" placeholder="Create a strong password" required>
+          </div>
+          
+          <div class="form-group">
+            <label class="form-label" for="confirmPassword">Confirm Password</label>
+            <input type="password" id="confirmPassword" class="form-input" placeholder="Confirm your password" required>
+          </div>
+          
+          <button type="submit" class="btn-primary">
+            <i class="fas fa-user-plus"></i>
+            Sign Up Now
+          </button>
+        </form>
+        
+        <div class="auth-divider">
+          <span>OR SIGN UP WITH</span>
+        </div>
+        
+        <div class="social-buttons">
+          <button class="social-btn google" onclick="signInWithGoogle()">
+            <i class="fab fa-google"></i>
+            Continue with Google
+          </button>
+          
+          <button class="social-btn wechat" onclick="signInWithWeChat()">
+            <i class="fab fa-weixin"></i>
+            Continue with WeChat
+          </button>
+        </div>
+        
+        <div class="auth-footer">
+          <p>Already have an account? <a href="login.html">Sign In</a></p>
+        </div>
+      </div>
+    </div>
+    
+    <script src="api-client.js"></script>
+    <script src="user-manager.js"></script>
+    <script>
+      // Wait for user manager to be loaded
+      window.addEventListener('load', function() {
+        // Check if user manager is available
+        if (!window.userManager) {
+          console.error('User manager not loaded!');
+          alert('System error: User management system not available. Please refresh the page.');
+          return;
+        }
+        
+        // Add form submit listener
+        const signupForm = document.getElementById('signupForm');
+        if (signupForm) {
+          signupForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            try {
+              const fullName = document.getElementById('fullName').value;
+              const email = document.getElementById('email').value;
+              const password = document.getElementById('password').value;
+              const confirmPassword = document.getElementById('confirmPassword').value;
+              
+              console.log('Attempting registration with:', { fullName, email });
+              
+              // Use user manager to register
+              const result = window.userManager.register({
+                fullName,
+                email,
+                password,
+                confirmPassword
+              });
+              
+              console.log('Registration result:', result);
+              
+              if (result.success) {
+                alert(`\u2705 ${result.message}\n\nWelcome to Chinese Heritage, ${result.user.fullName}!\n\nYour account has been created successfully.\nYou can now login with your email and password.`);
+                window.location.href = 'login.html';
+              } else {
+                alert(`\u274c Registration Failed\n\n${result.message}`);
+              }
+            } catch (error) {
+              console.error('Registration error:', error);
+              alert('An error occurred during registration. Please try again.');
+            }
+          });
+        } else {
+          console.error('Signup form not found!');
+        }
+      });
+      
+      function signInWithGoogle() {
+        alert('🔗 Google Sign Up\n\nThis would connect to Google OAuth API.\nFor demo: Account created with Google!');
+        window.location.href = 'login.html';
+      }
+      
+      function signInWithWeChat() {
+        alert('💬 WeChat Sign Up\\n\\nThis would connect to WeChat OAuth API.\\nFor demo: Account created with WeChat!');
+        window.location.href = 'login.html';
+      }
+    </script>
+  </body>
+</html>
