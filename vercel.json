@@ -5,30 +5,10 @@
       "maxDuration": 10
     }
   },
-  "routes": [
+  "rewrites": [
     {
-      "src": "/api/chat",
-      "dest": "/api/chat.js"
-    },
-    {
-      "src": "/api/map-config",
-      "dest": "/api/map-config.js"
-    },
-    {
-      "src": "/api/db-config",
-      "dest": "/api/db-config.js"
-    },
-    {
-      "src": "/api/(.*)",
-      "dest": "/api/$1"
-    },
-    {
-      "src": "/",
-      "dest": "/undex.html"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/$1"
+      "source": "/",
+      "destination": "/undex.html"
     }
   ],
   "headers": [
