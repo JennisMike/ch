@@ -12,15 +12,8 @@ class AIChat {
     }
 
     loadApiKey() {
-        // For Vercel deployment, environment variables are injected at build time
-        // The AI_API_KEY will be replaced by Vercel during build
-        this.apiKey = '%%AI_API_KEY%%';
-        
-        // Fallback for local development - check if the placeholder was replaced
-        if (this.apiKey === '%%AI_API_KEY%%') {
-            console.warn('AI_API_KEY not found. Please set environment variable in Vercel or use local .env file');
-            this.apiKey = null;
-        }
+        // API key is now handled by backend, no need to load it in frontend
+        this.apiKey = null;
     }
 
     createChatWidget() {
@@ -136,11 +129,10 @@ class AIChat {
         Provide accurate, informative, and engaging responses about Chinese heritage, construction techniques, historical context, and cultural significance.
         Keep responses concise but informative (max 150 words).`;
 
-        const response = await fetch('https://api.deepseek.com/v1/chat/completions', {
+        const response = await fetch('/api/chat', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${this.apiKey}`
+                'Content-Type': 'application/json'
             },
             body: JSON.stringify({
                 model: 'deepseek-chat',
@@ -154,7 +146,8 @@ class AIChat {
         });
 
         if (!response.ok) {
-            throw new Error(`API Error: ${response.status}`);
+            const errorData = await response.json().catch(() => ({}));
+            throw new Error(errorData.error || `API Error: ${response.status}`);
         }
 
         const data = await response.json();

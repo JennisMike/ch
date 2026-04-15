@@ -344,37 +344,43 @@
     </div>
 
     <script>
-        // Load Baidu Maps API key from build-time environment variables
-        function loadBaiduMapsAPI() {
-            // For Vercel deployment, environment variables are injected at build time
-            // The BAIDU_MAPS_API_KEY will be replaced by Vercel during build
-            const apiKey = '%%BAIDU_MAPS_API_KEY%%';
-            
-            // Check if the placeholder was replaced
-            if (apiKey === '%%BAIDU_MAPS_API_KEY%%') {
-                console.warn('BAIDU_MAPS_API_KEY not found. Please set environment variable in Vercel or use local .env file');
-                document.getElementById('container').innerHTML = '<div style="padding:20px;text-align:center;color:red;">Baidu Maps API key not configured. Please set BAIDU_MAPS_API_KEY environment variable.</div>';
-                return;
+        // Load Baidu Maps API key from backend
+        async function loadBaiduMapsAPI() {
+            try {
+                const response = await fetch('/api/map-config');
+                if (!response.ok) {
+                    throw new Error('Failed to fetch map configuration');
+                }
+                
+                const data = await response.json();
+                const apiKey = data.apiKey;
+                
+                if (!apiKey) {
+                    throw new Error('Baidu Maps API key not configured');
+                }
+                
+                const script = document.getElementById('baidu-maps-script');
+                script.src = `https://api.map.baidu.com/api?v=1.0&type=webgl&ak=${apiKey}`;
+                script.onload = () => {
+                    console.log('Baidu Maps API script loaded successfully');
+                    // Initialize map after script loads
+                    setTimeout(() => {
+                        if (typeof BMapGL !== 'undefined') {
+                            initBaiduMap();
+                        } else {
+                            console.error('Baidu Maps API failed to load');
+                            document.getElementById('container').innerHTML = '<div style="padding:20px;text-align:center;color:red;">Failed to load Baidu Maps. Please check your internet connection and API key.</div>';
+                        }
+                    }, 500);
+                };
+                script.onerror = () => {
+                    console.error('Failed to load Baidu Maps API script');
+                    document.getElementById('container').innerHTML = '<div style="padding:20px;text-align:center;color:red;">Failed to load Baidu Maps. Please check your internet connection.</div>';
+                };
+            } catch (error) {
+                console.error('Error loading Baidu Maps API:', error);
+                document.getElementById('container').innerHTML = '<div style="padding:20px;text-align:center;color:red;">Failed to load Baidu Maps API key. Please check server configuration.</div>';
             }
-            
-            const script = document.getElementById('baidu-maps-script');
-            script.src = `https://api.map.baidu.com/api?v=1.0&type=webgl&ak=${apiKey}`;
-            script.onload = () => {
-                console.log('Baidu Maps API script loaded successfully');
-                // Initialize map after script loads
-                setTimeout(() => {
-                    if (typeof BMapGL !== 'undefined') {
-                        initBaiduMap();
-                    } else {
-                        console.error('Baidu Maps API failed to load');
-                        document.getElementById('container').innerHTML = '<div style="padding:20px;text-align:center;color:red;">Failed to load Baidu Maps. Please check your internet connection and API key.</div>';
-                    }
-                }, 500);
-            };
-            script.onerror = () => {
-                console.error('Failed to load Baidu Maps API script');
-                document.getElementById('container').innerHTML = '<div style="padding:20px;text-align:center;color:red;">Failed to load Baidu Maps. Please check your internet connection.</div>';
-            };
         }
 
         // Load API key and then initialize map

@@ -436,21 +436,27 @@
         // Neon Admin Panel JavaScript
         let currentSection = 'dashboard';
 
-        // Load Neon DB connection string from build-time environment variables
-        function loadNeonConnectionString() {
-            // For Vercel deployment, environment variables are injected at build time
-            // The NEON_DB_CONNECTION_STRING will be replaced by Vercel during build
-            const connectionString = '%%NEON_DB_CONNECTION_STRING%%';
-            
-            // Check if the placeholder was replaced
-            if (connectionString === '%%NEON_DB_CONNECTION_STRING%%') {
-                console.warn('NEON_DB_CONNECTION_STRING not found. Please set environment variable in Vercel or use local .env file');
+        // Load Neon DB connection string from backend
+        async function loadNeonConnectionString() {
+            try {
+                const response = await fetch('/api/db-config');
+                if (!response.ok) {
+                    throw new Error('Failed to fetch database configuration');
+                }
+                
+                const data = await response.json();
+                
+                if (!data.configured) {
+                    throw new Error('Neon DB connection string not configured');
+                }
+                
+                // Display the masked connection string for reference
+                document.getElementById('connectionString').value = data.connectionString;
+                console.log('Neon DB connection string loaded from backend');
+            } catch (error) {
+                console.error('Error loading Neon DB connection string:', error);
                 document.getElementById('connectionString').placeholder = 'Neon DB connection string not configured';
-                return;
             }
-            
-            document.getElementById('connectionString').value = connectionString;
-            console.log('Neon DB connection string loaded from environment variables');
         }
 
         // Initialize
