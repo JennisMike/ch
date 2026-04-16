@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>故宫探险 | Forbidden City Quest</title>
+    <style>
+        :root {
+            --palace-red: #8B0000;
+            --imperial-gold: #D4AF37;
+            --bg-dark: #1a0000;
+        }
+
+        body {
+            margin: 0;
+            background-color: #0f0f0f;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: white;
+        }
+
+        .container {
+            display: flex;
+            width: 1000px;
+            height: 550px;
+            background: linear-gradient(145deg, #2a0000, #1a1a1a);
+            border: 3px solid var(--imperial-gold);
+            box-shadow: 0 0 50px rgba(0,0,0,0.9);
+            overflow: hidden;
+        }
+
+        /* Center-Left Thumbnail Area */
+        .thumbnail-area {
+            flex: 1.5;
+            background-color: #000;
+            display: flex;
+            flex-direction: column;
+            border-right: 2px solid var(--imperial-gold);
+        }
+
+        .thumbnail-area img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.8;
+        }
+
+        /* Right Content Area */
+        .info-area {
+            flex: 1;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid var(--imperial-gold);
+            margin-bottom: 20px;
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            color: var(--imperial-gold);
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 1rem;
+            opacity: 0.6;
+            transition: 0.3s;
+        }
+
+        .tab-btn.active {
+            opacity: 1;
+            border-bottom: 3px solid var(--imperial-gold);
+            font-weight: bold;
+        }
+
+        .content-box {
+            flex-grow: 1;
+        }
+
+        .lang-content { display: none; }
+        .lang-content.active { display: block; animation: fadeIn 0.5s; }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        h2 { color: var(--imperial-gold); margin-top: 0; font-size: 1.8rem; }
+        p { line-height: 1.7; color: #e0e0e0; font-size: 1.05rem; }
+
+        /* Action Buttons */
+        .actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: 0.3s;
+        }
+
+        .btn-play { background: var(--imperial-gold); color: var(--palace-red); }
+        .btn-play:hover { background: white; transform: scale(1.02); }
+
+        .btn-exit { background: transparent; border: 1px solid var(--imperial-gold); color: var(--imperial-gold); }
+        .btn-exit:hover { background: rgba(212, 175, 55, 0.1); }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="thumbnail-area">
+        <img src="game_thumbnail.png" alt="Forbidden City Gameplay Preview">
+    </div>
+
+    <div class="info-area">
+        <div class="tabs">
+            <button class="tab-btn active" onclick="setTab('zh')">中文说明</button>
+            <button class="tab-btn" onclick="setTab('en')">English</button>
+        </div>
+
+        <div class="content-box">
+            <div id="zh" class="lang-content active">
+                <h2>失落的守卫</h2>
+                <p>大胆奴才！一场可怕的风暴将故宫屋顶的神圣守卫吹散。宫殿的阴阳平衡已失，你必须寻回散落的五件遗迹。不得有误！</p>
+                <p><strong>操作：</strong> WASD 移动，鼠标环视。靠近遗迹即可收集。</p>
+            </div>
+            <div id="en" class="lang-content">
+                <h2>The Lost Guardians</h2>
+                <p>Bold servant! A terrible storm has scattered the sacred guardians of the Forbidden City. The spiritual balance is broken. You must find all 5 missing relics to restore peace. Do not fail!</p>
+                <p><strong>Controls:</strong> WASD to move, Mouse to look. Walk into relics to collect them.</p>
+            </div>
+        </div>
+
+        <div class="actions">
+            <button class="btn btn-play" onclick="location.href='index.html'">进入游戏 ENTER</button>
+            <button class="btn btn-exit" onclick="location.href='../index.html'">退出 EXIT</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    function setTab(lang) {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.lang-content').forEach(c => c.classList.remove('active'));
+        
+        document.getElementById(lang).classList.add('active');
+        event.currentTarget.classList.add('active');
+    }
+</script>
+
+</body>
+</html>
